@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/optimize"
+        android:icon="@drawable/ic_boost"
+        android:title="" />
+
+    <item
+        android:id="@+id/energy_saving"
+        android:icon="@drawable/ic_battery_saver"
+        android:title="" />
+
+    <item
+        android:id="@+id/cool_cpu"
+        android:icon="@drawable/ic_cool_cpu"
+        android:title="" />
+
+    <item
+        android:id="@+id/clean_trash"
+        android:icon="@drawable/ic_clean_trash"
+        android:title="" />
+    <item
+        android:id="@+id/no_ads"
+        android:icon="@drawable/ic_no_ads"
+        android:title="" />
+
+</menu>

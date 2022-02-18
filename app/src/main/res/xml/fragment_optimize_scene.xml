@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/materialButton"
+            motion:layout_constraintEnd_toStartOf="@+id/cgl_end_of_button"
+            motion:layout_constraintStart_toEndOf="@+id/cgl_start_of_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toBottomOf="@+id/cgl_top_of_button"
+            motion:layout_constraintHeight_percent="0.07" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/donut_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/crpv_progress"
+            motion:layout_constraintWidth_percent="0.7"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/cgl_top"
+            motion:layout_constraintDimensionRatio="1:1"
+            android:visibility="visible">
+            <CustomAttribute
+                motion:attributeName="fgColorEnd"
+                motion:customColorValue="#48BCEE" />
+            <CustomAttribute
+                motion:attributeName="fgColorStart"
+                motion:customColorValue="#4895EE" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/tv_ram"
+            motion:layout_constraintEnd_toEndOf="@+id/crpv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/tv_found_used_ram"
+            motion:layout_constraintTop_toTopOf="@+id/crpv_progress"
+            motion:layout_constraintStart_toStartOf="@+id/crpv_progress" />
+        <Constraint
+            android:id="@+id/tv_ram"
+            motion:layout_constraintEnd_toEndOf="@+id/crpv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/tv_found_used_ram"
+            motion:layout_constraintTop_toTopOf="@+id/crpv_progress"
+            motion:layout_constraintStart_toStartOf="@+id/crpv_progress">
+            <CustomAttribute
+                motion:attributeName="textColor"
+                motion:customColorValue="#4895EE" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/materialButton"
+            motion:layout_constraintEnd_toStartOf="@+id/cgl_end_of_button"
+            motion:layout_constraintStart_toEndOf="@+id/cgl_start_of_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toBottomOf="@+id/cgl_top_of_button"
+            motion:layout_constraintHeight_percent="0.07" >
+            <CustomAttribute motion:attributeName="crossfade"
+                motion:customFloatValue="1"
+                />
+        </Constraint>
+    </ConstraintSet>
+</MotionScene>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape>
+            <corners android:radius="@dimen/_18sdp"/>
+            <solid android:color="@color/optimize_button_color_not_enabled" />
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape>
+            <corners android:radius="@dimen/_18sdp"/>
+            <solid android:color="@color/optimize_button" />
+        </shape>
+    </item>
+</selector>

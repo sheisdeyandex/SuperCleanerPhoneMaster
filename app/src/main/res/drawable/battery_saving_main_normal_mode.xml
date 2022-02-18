@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <!-- create gradient you want to use with the angle you want to use -->
+        <shape
+            android:shape="oval">
+            <solid android:color="#32E992" />
+
+        </shape>
+
+    </item>
+
+    <!-- create the stroke for top, left, bottom and right with the dp you want -->
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
+
+        <shape
+            android:shape="oval">
+            <solid android:color="#27282D" />
+
+        </shape>
+    </item>
+
+</layer-list>
