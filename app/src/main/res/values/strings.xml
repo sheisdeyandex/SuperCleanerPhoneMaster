@@ -46,8 +46,8 @@
     <string name="privacy">Политика конфиденциальности</string>
     <string name="clean_top">Очистка от мусора</string>
     <string name="banner_size">BANNER</string>
-    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="inter_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="banner_id">ca-app-pub-1102972648948693/4451129759</string>
+    <string name="inter_id">ca-app-pub-1102972648948693/8799785910</string>
     <string name="accept">принять</string>
     <string name="cancel">отклонить</string>
 </resources>
