@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "23758369282",
+    "project_id": "cleaner-1-510db",
+    "storage_bucket": "cleaner-1-510db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23758369282:android:ea10e34ba45cf8632d2d1b",
+        "android_client_info": {
+          "package_name": "com.supers.cleaner.phonemaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23758369282-vffv558of56leg4fql6do2fkd05dai16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd5qZXVewVD6LYBdtZQBXBt1UGeNxw4eU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23758369282-vffv558of56leg4fql6do2fkd05dai16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1102972648948693~2911667432"
+    }
+  ],
+  "configuration_version": "1"
+}
