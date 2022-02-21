@@ -9,12 +9,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.databinding.FragmentNormalModeBinding
 import com.supers.cleaner.phonemaster.interfaces.IBanner
@@ -24,6 +26,8 @@ import com.yandex.metrica.impl.ob.Ib
 class FragmentNormalMode(iFragment: IFragment,iBanner: IBanner) : Fragment() {
     val iFragment:IFragment
     val iBanner:IBanner = iBanner
+
+    private var mInterstitialAd: InterstitialAd? = null
 init {
     this.iFragment = iFragment
 } fun openAndroidPermissionsMenu() {
@@ -83,19 +87,31 @@ init {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         showSettings = Settings.System.canWrite(requireContext())
                         if(showSettings){
-                            iBanner.showInter()
+                            if (mInterstitialAd != null) {
+                                mInterstitialAd?.show(requireActivity())
+                            } else {
+                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                            }
                             setBrightness(200)
 
                             iFragment.regulate(true,1)
                         }
                         else{
-                            iBanner.showInter()
+                            if (mInterstitialAd != null) {
+                                mInterstitialAd?.show(requireActivity())
+                            } else {
+                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                            }
                             iFragment.regulate(true,1)
                             openAndroidPermissionsMenu()
                         }
                     }
                     else{
-                        iBanner.showInter()
+                        if (mInterstitialAd != null) {
+                            mInterstitialAd?.show(requireActivity())
+                        } else {
+                            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                        }
                         iFragment.regulate(true,1)
                     }
                 }

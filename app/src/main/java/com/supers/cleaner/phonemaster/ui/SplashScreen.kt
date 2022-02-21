@@ -9,9 +9,12 @@ import com.supers.cleaner.phonemaster.databinding.FragmentOptimizeBinding
 import com.supers.cleaner.phonemaster.databinding.FragmentSplashScreenBinding
 import android.content.Intent
 import android.net.Uri
+import com.supers.cleaner.phonemaster.MyApplication
+import com.supers.cleaner.phonemaster.interfaces.IFragment
 
 
-class SplashScreen : Fragment() {
+class SplashScreen(iFragment: IFragment) : Fragment() {
+    val  iFragment:IFragment = iFragment
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
 
@@ -22,8 +25,8 @@ class SplashScreen : Fragment() {
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.tvPrivacy.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/super-cleaner-phone-master/главная-страница"))
-            startActivity(browserIntent)
+      iFragment.regulate(false,7)
+            MyApplication.showuserpolicy = true
         }
         return view
     }

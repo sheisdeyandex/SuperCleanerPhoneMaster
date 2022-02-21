@@ -29,6 +29,8 @@ class MyApplication : Application() {
         @JvmField
         var worktime: String = ""
         var premiumUser: Boolean = false
+        var showuserpolicy: Boolean = false
+        var adloaded: Boolean = false
         var bluetoothPermissionGranted: Boolean = false
         var animImageDrawable: Drawable? = null
         var animImageDrawableSecond: Drawable? = null

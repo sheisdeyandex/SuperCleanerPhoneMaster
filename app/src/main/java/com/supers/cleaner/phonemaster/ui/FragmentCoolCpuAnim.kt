@@ -3,12 +3,14 @@ package com.supers.cleaner.phonemaster.ui
 import android.animation.Animator
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.databinding.FragmentCoolCpuAnimBinding
 import com.supers.cleaner.phonemaster.interfaces.IFragment
@@ -26,6 +28,7 @@ val iFragment:IFragment = iFragment
     private var _binding: FragmentCoolCpuAnimBinding? = null
     private val binding get() = _binding!!
 
+    private var mInterstitialAd: InterstitialAd? = null
     private fun cpuTemperature(): Float {
         val process: Process
         return try {
@@ -66,7 +69,11 @@ val iFragment:IFragment = iFragment
                         }
 
                         override fun onFinish() {
-                            iBanner.showInter()
+                            if (mInterstitialAd != null) {
+                                mInterstitialAd?.show(requireActivity())
+                            } else {
+                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                            }
                             iFragment.regulateCPUAnim(true, 1)
                         }
                     }.start()

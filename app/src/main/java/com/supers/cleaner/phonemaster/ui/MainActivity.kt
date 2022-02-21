@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
     val fm = supportFragmentManager
     private lateinit var activeFragment: Fragment
     private val fragmentOptimize = FragmentOptimize(this)
+    private val webViewFragment = WebViewFragment(this)
     private val fragmentClean = FragmentClean(this  ,this)
     private val fragmentCleanAnim = FragmentCleanAnim(this,this)
     private val fragmentCoolCpu = FragmentCoolCpu(this,this)
@@ -100,6 +101,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
     }
 
     fun addFragments(){
+       fm.beginTransaction().add(R.id.cl_main, webViewFragment).hide(webViewFragment).commit()
        fm.beginTransaction().add(R.id.cl_main, fragmentCleanAnim).hide(fragmentCleanAnim).commit()
        fm.beginTransaction().add(R.id.cl_main, fragmentClean).hide(fragmentClean).commit()
         fm.beginTransaction().add(R.id.cl_main, fragmentCoolCpuAnim).hide(fragmentCoolCpuAnim).commit()
@@ -130,16 +132,23 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
 
         InterstitialAd.load(this,getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
-                binding.bnvNav.visibility = View.VISIBLE
-                showInter()
-                mInterstitialAd = null
+                if (!MyApplication.showuserpolicy){
+                    fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
+                    binding.bnvNav.visibility = View.VISIBLE
+                    showInter()
+                    mInterstitialAd = null
+                }
+MyApplication.adloaded=true
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
-                binding.bnvNav.visibility = View.VISIBLE
-                interstitialAd.show(this@MainActivity)
+              if(!MyApplication.showuserpolicy){
+                  fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
+                  binding.bnvNav.visibility = View.VISIBLE
+                  interstitialAd.show(this@MainActivity)
+
+              }
+                MyApplication.adloaded=true
                 mInterstitialAd = interstitialAd
 
             }
@@ -154,7 +163,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
         fragmentExtremeMode = FragmentExtremePowerSaving( finalExtremeModeUsageTime,this, this)
         fragmentUltraMode  = FragmentUltraPowerSaving(finalUltraModeUsageTime, this,this)
         fragmentUltraModeAnim  = FragmentUltraPowerSavingAnim(this,this)
-        splashScreen = SplashScreen()
+        splashScreen = SplashScreen(this)
      addFragments()
 object :CountDownTimer(3000,1000){
     override fun onTick(p0: Long) {
@@ -202,11 +211,6 @@ activeFragment = fragmentOptimize
 binding.bnvNav.visibility = View.VISIBLE
                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
                 activeFragment = fragmentEnergySaving
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentNormalMode).commit()
@@ -218,11 +222,6 @@ binding.bnvNav.visibility = View.VISIBLE
                 binding.bnvNav.visibility = View.VISIBLE
                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
                 activeFragment = fragmentEnergySaving
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentUltraMode).commit()
@@ -235,11 +234,6 @@ binding.bnvNav.visibility = View.VISIBLE
                 binding.bnvNav.visibility = View.VISIBLE
                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
                 activeFragment = fragmentEnergySaving
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentExtremeMode).commit()
@@ -252,11 +246,6 @@ binding.bnvNav.visibility = View.VISIBLE
                 binding.bnvNav.visibility = View.VISIBLE
                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
                 activeFragment = fragmentEnergySaving
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentUltraModeAnim).commit()
@@ -269,38 +258,48 @@ binding.bnvNav.visibility = View.VISIBLE
                 binding.bnvNav.visibility = View.VISIBLE
                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
                 activeFragment = fragmentEnergySaving
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentExtremeModeAnim).commit()
                 activeFragment= fragmentExtremeModeAnim
-
             }
         }
         else if(fragment==6)
         {
             if(finished){
                 binding.bnvNav.visibility = View.VISIBLE
-                fm.beginTransaction().hide(activeFragment).commit()
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(this)
-                } else {
-                    Log.d("suka", "The interstitial ad wasn't ready yet.")
-                }
-                 fm.beginTransaction()   .show(fragmentClean).commit()
+                fm.beginTransaction().hide(activeFragment).show(fragmentClean).commit()
                 activeFragment = fragmentClean
-
             } else{
                 binding.bnvNav.visibility = View.GONE
                 fm.beginTransaction().hide(activeFragment).show(fragmentCleanAnim).commit()
                 activeFragment= fragmentCleanAnim
             }
         }
+        else if(fragment==7)
+        {
+            if(finished){
+                fm.beginTransaction().hide(webViewFragment).show(splashScreen).commit()
+                object :CountDownTimer(2000,1000){
+                    override fun onTick(p0: Long) {
 
+                    }
+
+                    override fun onFinish() {
+                        fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
+                        binding.bnvNav.visibility = View.VISIBLE
+                        mInterstitialAd!!.show(this@MainActivity)
+                    }
+
+                }.start()
+
+            }
+            else{
+                fm.beginTransaction().hide(splashScreen).show(webViewFragment).commit()
+
+            }
+
+        }
     }
     override fun regulateCPUAnim(finished: Boolean, fragment: Int) {
         if(fragment==1){
