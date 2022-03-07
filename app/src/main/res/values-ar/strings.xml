@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Super Cleaner Phone Master</string>
+    <string name="optimize">تحسين</string>
+    <string name="optimized">الأمثل</string>
+    <string name="ram">تخزين</string>
+    <string name="ram_usage_found">عثر عليه</string>
+    <string name="ram_used">استخدام الذاكرة</string>
+    <string name="normal_mode">عادي</string>
+    <string name="extreme_mode">أقصى</string>
+    <string name="ultra_mode">فائق</string>
+    <string name="work_left_time">وقت الشحن المتبقي</string>
+    <string name="optimizing">تحسين ...</string>
+    <string name="doit">تطبيق</string>
+    <string name="ultrapowertext">تمديد البطارية حتى</string>
+    <string name="add">إضافة</string>
+    <string name="extremepowermode">تمديد البطارية حتى</string>
+    <string name="boost">تعزيز الشحن</string>
+    <string name="extreme_power_saving">أقصى</string>
+    <string name="ultrapowersaving">فائق</string>
+    <string name="normal_mode_text">عادي</string>
+    <string name="energy_saving">حافظ البطارية</string>
+    <string name="cool_cpu">تبريد وحدة المعالجة المركزية</string>
+    <string name="overheat">سخونة أكثر مما ينبغي</string>
+    <string name="cool">تبريد</string>
+    <string name="need_cool">تتسبب فئة التطبيقات في مشكلة اختر التبريد</string>
+    <string name="normal">عادي</string>
+    <string name="normal_cpu_temperature">درجة حرارة وحدة المعالجة المركزية جيدة</string>
+    <string name="cooled">تم التبريد</string>
+    <string name="coolled">تبريد وحدة المعالجة المركزية إلى</string>
+    <string name="clean">نظيف</string>
+    <string name="cookies">الذاكرة المؤقتة</string>
+    <string name="time_files">ملفات مؤقتة</string>
+    <string name="left_files">الملفات المتبقية</string>
+    <string name="system_trash">ملفات النظام غير المرغوب فيها</string>
+    <string name="cleaned">تم المسح</string>
+    <string name="crystal_clear">وضوح الشمس</string>
+    <string name="cleaned_button">تم التنظيف</string>
+    <string name="clean_top">منظف الملفات غير المرغوب بها</string>
+    <string name="decrease_cpu">تقليل السطوع حتى 90٪</string>
+    <string name="decrease_cpu_anim">إنقاص أداء الجهاز</string>
+    <string name="closing_apps">إغلاق التطبيقات الخلفية والخدمات</string>
+    <string name="blocking_apps">قفل الوصول إلى التطبيقات التي تستهلك الطاقة</string>
+    <string name="closing_apps_next">إغلاق جميع وظائف استهلاك الطاقة</string>
+    <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
+    <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
+    <string name="free" translatable="false">free</string>
+    <string name="used_apps" translatable="false">used_apps</string>
+    <string name="remove" translatable="false">remove</string>
+
+    <string name="cache" translatable="false">cache</string>
+    <string name="ok" translatable="false">ok</string>
+</resources>

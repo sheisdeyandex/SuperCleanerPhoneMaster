@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Super Cleaner Phone Master</string>
+    <string name="optimize">OTIMIZAR</string>
+    <string name="optimized">OTIMIZADO</string>
+    <string name="ram">Armazenamento</string>
+    <string name="ram_usage_found">Encontrado</string>
+    <string name="ram_used">Uso de RAM</string>
+    <string name="work_left_time">tempo de carregamento restante</string>
+    <string name="optimizing">Otimizando...</string>
+    <string name="doit">Aplicar</string>
+    <string name="ultrapowertext">Bateria estendida até</string>
+    <string name="add">Adicionar</string>
+    <string name="extremepowermode">Bateria estendida até</string>
+    <string name="boost">Amplificador de carga</string>
+    <string name="extreme_power_saving">Radical</string>
+    <string name="ultrapowersaving">Ultra</string>
+    <string name="normal_mode_text">Normal</string>
+    <string name="energy_saving">Economizador de bateria</string>
+    <string name="cool_cpu">Resfriamento da CPU</string>
+    <string name="overheat">SUPERAQUECIDO</string>
+    <string name="cool">Resfriar</string>
+    <string name="need_cool">ApplicationsClass causando problema ative resfriamento</string>
+    <string name="normal">NORMAL</string>
+    <string name="normal_cpu_temperature">Temperatura da CPU está BOA</string>
+    <string name="cooled">RESFRIADO</string>
+    <string name="coolled">CPU resfriada a</string>
+    <string name="clean">Limpar</string>
+    <string name="clean_hard">Hard</string>
+    <string name="alot">Hard</string>
+    <string name="cookies">Memória\ncache</string>
+    <string name="system_trash">Lixo do\nsistema</string>
+    <string name="cleaned">Eliminado</string>
+    <string name="crystal_clear">CRISTALINO</string>
+    <string name="cleaned_button">Eliminado</string>
+    <string name="privacy">Privacy Policy</string>
+    <string name="clean_top">Eliminador de arquivos inúteis</string>
+    <string name="accept">принять</string>
+    <string name="cancel">отклонить</string>
+    <string name="decrease_cpu">Reduzindo brilho para 90%</string>
+    <string name="decrease_cpu_anim">Reduzindo desempenho do aparelho</string>
+    <string name="closing_apps">Fechando apps e serviços em segundo plano</string>
+    <string name="blocking_apps">Bloqueando acesso a apps consumidores de energia</string>
+    <string name="closing_apps_next">Fechando todas as funções consumidoras de energia</string>
+    <string name="normal_mode">Normal</string>
+    <string name="ultra_mode">Ultra</string>
+    <string name="extreme_mode">Radical</string>
+    <string name="time_files">Arquivos\ntemporários</string>
+    <string name="left_files">Arquivos\nresiduais</string>
+    <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
+    <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
+
+</resources>
