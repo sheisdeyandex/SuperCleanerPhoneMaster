@@ -12,6 +12,9 @@ import android.net.Uri
 import android.os.*
 import android.provider.Settings
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.databinding.FragmentEnergySavingBinding
@@ -35,6 +38,7 @@ val iBanner:IBanner = iBanner
         }
     }
 
+    var mInterstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,6 +66,18 @@ val iBanner:IBanner = iBanner
         binding.ywView.progress = level
         binding.ywView.setFrontWaveColor(Color.parseColor("#772499DF"))
         binding.ywView.setBehindWaveColor(Color.parseColor("#4DBDFC"))
+        InterstitialAd.load(requireContext(),getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+
+                mInterstitialAd = interstitialAd
+
+            }
+        })
 binding.vNormalMode.setOnClickListener {
     if(MyApplication.bluetoothPermissionGranted){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

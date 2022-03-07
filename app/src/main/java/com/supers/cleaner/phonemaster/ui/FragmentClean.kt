@@ -11,7 +11,6 @@ import com.google.android.gms.ads.AdRequest
 import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.databinding.FragmentCleanBinding
-import com.supers.cleaner.phonemaster.databinding.FragmentCoolCpuBinding
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
 
@@ -45,7 +44,7 @@ class FragmentClean(iFragment: IFragment, iBanner: IBanner) : Fragment() {
                     binding.tvAlot2.text = getString(R.string.cleaned)
                     binding.tvAlot3.text = getString(R.string.cleaned)
                     binding.tvAlot4.text = getString(R.string.cleaned)
-                    binding.tvOverheat.text = getString(R.string.clean_progress)
+                    binding.tvOverheat.text = getString(R.string.crystal_clear)
                     binding.tvOverheat.setTextColor(Color.parseColor("#73EE48"))
                     binding.ivComponent1.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_1_1))
                     binding.ivComponent2.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_2_1))

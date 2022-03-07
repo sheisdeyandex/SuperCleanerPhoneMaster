@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.supers.cleaner.phonemaster">
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -22,6 +24,26 @@
 android:usesCleartextTraffic="true"
         android:theme="@style/Theme.SuperCleanerPhoneMaster"
         android:name=".MyApplication">
+        <receiver android:name=".AlarmBroadCastReceiver"
+            android:exported="false">
+        </receiver>
+
+        <receiver android:name=".AppListener"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver  android:name="Alarm_Booster">
+        </receiver>
+        <receiver  android:name=".Alarm_Junk">
+        </receiver>
+        <receiver  android:name=".AlarmReceiver">
+        </receiver>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1102972648948693~2911667432"/>

@@ -150,7 +150,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cgl_first_text"
         app:layout_constraintStart_toEndOf="@+id/iv_done"
         android:layout_marginStart="10dp"
-        android:text="Уменьшение яркости до 90%"
+        android:text="@string/decrease_cpu"
         android:textColor="#B1B1B4"
         android:id="@+id/tv_first_text"
         />
@@ -172,7 +172,7 @@
         app:layout_constraintStart_toEndOf="@+id/iv_done"
         app:layout_constraintWidth_percent="0.7"
         android:layout_marginStart="10dp"
-        android:text="Снижение производительности устройства"
+        android:text="@string/decrease_cpu_anim"
         android:textColor="#B1B1B4"
         android:id="@+id/tv_second_text"
         />
@@ -194,7 +194,7 @@
         app:layout_constraintStart_toEndOf="@+id/iv_done"
         android:layout_marginStart="10dp"
         app:layout_constraintWidth_percent="0.7"
-        android:text="Закрытие фоновых приложений и сервисов"
+        android:text="@string/closing_apps"
         android:textColor="#B1B1B4"
         android:id="@+id/tv_third_text"
         />
@@ -216,7 +216,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cgl_fourth_text"
         app:layout_constraintStart_toEndOf="@+id/iv_done"
         android:layout_marginStart="10dp"
-        android:text="Блокировка доступа к энергопотребляющим приложениям"
+        android:text="@string/blocking_apps"
         android:textColor="#B1B1B4"
         android:id="@+id/tv_fourth_text"
         />
@@ -238,7 +238,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cgl_fifth_text"
         app:layout_constraintStart_toEndOf="@+id/iv_done_fifth"
         android:layout_marginStart="10dp"
-        android:text="Закрытие всех энергопотребляющих функций"
+        android:text="@string/closing_apps_next"
         android:textColor="#B1B1B4"
         android:id="@+id/tv_fifth_text"
         />

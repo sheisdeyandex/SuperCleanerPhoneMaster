@@ -16,8 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.supers.cleaner.phonemaster.MyApplication
+import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.databinding.FragmentNormalModeBinding
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
@@ -48,7 +51,7 @@ init {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden){
-
+mInterstitialAd = (requireActivity()as MainActivity).mInterstitialAd
             val updateTask: Runnable = object : Runnable {
                 override fun run() {
                     binding.tvNormalModePercent.text = binding.crpvProgress.percent.toInt().toString()+"%"
@@ -57,7 +60,7 @@ init {
                         binding.tvFirstText.setTextColor(Color.WHITE)
 
                     }
-                    else   if(binding.crpvProgress.percent.toInt() == 48){
+                    else   if(binding.crpvProgress.percent.toInt() == 42){
                         binding.ivDoneSecond.visibility= View.VISIBLE
                         binding.tvSecondText.setTextColor(Color.WHITE)
 
@@ -87,33 +90,24 @@ init {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         showSettings = Settings.System.canWrite(requireContext())
                         if(showSettings){
-                            if (mInterstitialAd != null) {
-                                mInterstitialAd?.show(requireActivity())
-                            } else {
-                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                            }
-                            setBrightness(200)
 
                             iFragment.regulate(true,1)
+                            setBrightness(200)
+
                         }
                         else{
-                            if (mInterstitialAd != null) {
-                                mInterstitialAd?.show(requireActivity())
-                            } else {
-                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                            }
+
                             iFragment.regulate(true,1)
+
                             openAndroidPermissionsMenu()
                         }
                     }
                     else{
-                        if (mInterstitialAd != null) {
-                            mInterstitialAd?.show(requireActivity())
-                        } else {
-                            Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                        }
+
                         iFragment.regulate(true,1)
+
                     }
+
                 }
 
                 override fun onAnimationCancel(animator: Animator) {}
@@ -138,6 +132,8 @@ init {
         if(!MyApplication.premiumUser){
             binding.avBanner.loadAd(adRequest)
         }
+
+
         return view
     }
 

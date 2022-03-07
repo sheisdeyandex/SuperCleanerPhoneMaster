@@ -6,48 +6,60 @@
     <string name="title_profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="optimize">Оптимизировать</string>
-    <string name="optimized">Оптимизировано</string>
-    <string name="ram">Память</string>
-    <string name="ram_usage_found">Найдено</string>
-    <string name="ram_used">Использовано ОЗУ</string>
+    <string name="optimize">Optimize</string>
+    <string name="optimized">Optimized</string>
+    <string name="ram">Storage</string>
+    <string name="ram_usage_found">Found</string>
+    <string name="ram_used">Ram Usage</string>
     <string name="normal_mode">Normal\nmode</string>
     <string name="extreme_mode">Extreme\nPower Saving</string>
     <string name="ultra_mode">Ultra\nPower Saving</string>
-    <string name="work_left_time">Оставшееся время работы</string>
-    <string name="optimizing">Оптимизация...</string>
-    <string name="doit">Применить</string>
-    <string name="ultrapowertext">Время работы увеличено до</string>
-    <string name="add">Добавить</string>
-    <string name="extremepowermode">Заряд батареи увеличен до</string>
-    <string name="boost">Ускорение</string>
+    <string name="work_left_time">charging time remaning</string>
+    <string name="optimizing">Optimizing...</string>
+    <string name="doit">Apply</string>
+    <string name="ultrapowertext">Extended Battery Up to</string>
+    <string name="add">Add</string>
+    <string name="extremepowermode">Extended Battery Up to</string>
+    <string name="boost">Charge Booster</string>
     <string name="extreme_power_saving">Extreme Power Saving</string>
     <string name="ultrapowersaving">Ultra Power Saving</string>
     <string name="normal_mode_text">Normal mode</string>
-    <string name="energy_saving">Энергосбережение</string>
-    <string name="cool_cpu">Охлаждение CPU</string>
-    <string name="overheat">Перегрев</string>
-    <string name="cool">Охладить</string>
-    <string name="need_cool">Необходимо охладить</string>
-    <string name="normal">В норме</string>
-    <string name="normal_cpu_temperature">Температура CPU в норме</string>
-    <string name="cooled">Охлаждено</string>
-    <string name="coolled">CPU Охлаждено до</string>
-    <string name="clean">Очистить</string>
-    <string name="clean_hard">Сильно</string>
-    <string name="alot">Сильно</string>
-    <string name="cookies">КЭШ</string>
-    <string name="time_files">ВРЕМЕННЫЕ\nФАЙЛЫ</string>
-    <string name="left_files">ОСТАТОЧНЫЕ\nФАЙЛЫ</string>
-    <string name="system_trash">СИСТЕМНЫЙ\nМУСОР</string>
-    <string name="cleaned">Очищено</string>
-    <string name="clean_progress">Чистка</string>
-    <string name="cleaned_button">Очищено</string>
-    <string name="privacy">Политика конфиденциальности</string>
-    <string name="clean_top">Очистка от мусора</string>
-    <string name="banner_size">BANNER</string>
-    <string name="banner_id">ca-app-pub-1102972648948693/4451129759</string>
-    <string name="inter_id">ca-app-pub-1102972648948693/8799785910</string>
-    <string name="accept">принять</string>
-    <string name="cancel">отклонить</string>
+    <string name="energy_saving">Battery Saver</string>
+    <string name="cool_cpu">Cooling CPU</string>
+    <string name="overheat">Overheated</string>
+    <string name="cool">Cool Down</string>
+    <string name="need_cool">Applications Class are causing problem hit cool down</string>
+    <string name="normal">normal</string>
+    <string name="normal_cpu_temperature">CPU Temperature is GOOD</string>
+    <string name="cooled">Cooled</string>
+    <string name="coolled">Cooled CPU to</string>
+    <string name="clean">Clean</string>
+    <string name="clean_hard">Hard</string>
+    <string name="alot">Hard</string>
+    <string name="cookies">Cache\nMemory</string>
+    <string name="time_files">Temporary \nFiles</string>
+    <string name="left_files">Residual \nFiles</string>
+    <string name="system_trash">System\nJunk</string>
+    <string name="cleaned">Cleaned</string>
+    <string name="crystal_clear">Crystal clear</string>
+    <string name="cleaned_button">Cleaned</string>
+    <string name="privacy" translatable="false">Privacy Policy</string>
+    <string name="clean_top">Junk Cleaner</string>
+    <string name="banner_size" translatable="false">SMART_BANNER</string>
+    <string name="banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="inter_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="accept" translatable="false">принять</string>
+    <string name="cancel" translatable="false">отклонить</string>
+    <string name="decrease_cpu">Decreasing Brightness Upto 90%</string>
+    <string name="decrease_cpu_anim">Decreasing Device Performance</string>
+    <string name="closing_apps">Closing All Power Consuming Functions</string>
+    <string name="blocking_apps">Locking Acess To Power Consuming Apps</string>
+    <string name="closing_apps_next">Closing All Power Consuming Functions</string>
+    <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
+    <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
+    <string name="title_notefication">Performnace Issue</string>
+    <string name="detail_notification">Phone is Performing Slow due to Large amount of junk files.</string>
+    <string name="my_message">My message</string>
+
+    <string name="is_optimised_by" translatable="false"><![CDATA[Is Optimized by Fast Cleaner & Battery Saver.]]></string>
 </resources>

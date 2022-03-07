@@ -44,6 +44,8 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
         getRamUsageInfo()
         var   adRequest = AdRequest.Builder().build()
         if(!MyApplication.premiumUser){
+
+            (requireActivity()as MainActivity).binding.bnvNav.visibility = View.VISIBLE
             binding.avBanner.loadAd(adRequest)
         }
         InterstitialAd.load(requireContext(),getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
