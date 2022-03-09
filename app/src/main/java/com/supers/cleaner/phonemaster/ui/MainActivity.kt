@@ -1,9 +1,9 @@
 package com.supers.cleaner.phonemaster.ui
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,17 +17,26 @@ import androidx.core.app.ActivityCompat
 import android.widget.Toast
 
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.CountDownTimer
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.os.*
+import android.provider.Settings
 import android.util.Log
+import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
 
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.supers.cleaner.phonemaster.AlarmBroadCastReceiver
+import com.supers.cleaner.phonemaster.AlarmReceiver
 import com.supers.cleaner.phonemaster.MyApplication
+import com.supers.cleaner.phonemaster.Utils.PreferencesProvider
 import com.supers.cleaner.phonemaster.interfaces.AskPermissions
 import com.supers.cleaner.phonemaster.interfaces.IBanner
+import com.supers.cleaner.phonemaster.services.CleanService
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
@@ -38,6 +47,11 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
         else{
             MyApplication.bluetoothPermissionGranted = true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("sukawtf", requestCode.toString())
     }
 
     lateinit var binding:ActivityMainBinding
@@ -82,6 +96,63 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
             MyApplication.bluetoothPermissionGranted = true
         }
     }
+private fun setCustomNotification(){
+    val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+    val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val notificationLayout = RemoteViews("com.supers.cleaner.phonemaster", R.layout.custom_notification_layout)
+//    val notificationIntent = Intent()
+//  //  intent.putExtra("whattodo","boost")
+//    val stackBuilder = TaskStackBuilder.create(applicationContext)
+//stackBuilder.addNextIntent(notificationIntent)
+////
+//    val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+//////
+//    notificationLayout.setOnClickPendingIntent(R.id.ll_boost, pendingIntent)
+    val customNotification = NotificationCompat.Builder(applicationContext, AlarmReceiver.CHANNEL_ID)
+        .setSmallIcon(R.drawable.ic_launcher_background)
+        .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+        .setCustomContentView(notificationLayout)
+        .setOngoing(true)
+        .build()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(
+            AlarmReceiver.CHANNEL_ID,
+            resources.getString(R.string.app_name),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .build()
+        channel.setSound(alarmSound, audioAttributes)
+        notificationManager.createNotificationChannel(channel)
+    }
+
+
+    notificationManager.notify(0, customNotification)
+}
+    private fun setNotification() {
+        PreferencesProvider.getInstance().edit().putString("state_Head", resources.getString(R.string.notif_head))
+            .putString("state_Body", resources.getString(R.string.notif_body))
+            .apply()
+
+        val calendar = Calendar.getInstance()
+        val now = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 20)
+        calendar.set(Calendar.MINUTE,43)
+        calendar.set(Calendar.SECOND, 0)
+
+        //if user sets the alarm after their preferred time has already passed that day
+        if (now.after(calendar)) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+Log.d("sukatime", calendar.time.toString())
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val alarmManager = getSystemService(Activity.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -119,6 +190,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
 
     }
 
+    private var handler: Handler? = null
     var mInterstitialAd: InterstitialAd? = null
     lateinit var adRequest: AdRequest
     lateinit var finalUltraModeUsageTime:String
@@ -127,8 +199,52 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+setCustomNotification()
+        setNotification()
+        handler = object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                //TODO: if android <= Nougat startService
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
+                    val i = Intent(this@MainActivity, CleanService::class.java)
+                    i.putExtra("junk", "sa")
+                    this@MainActivity.startService(i)
+                } else {
+                }
 
-         adRequest = AdRequest.Builder().build()
+            }
+        }
+        val myIntent = Intent(this@MainActivity, AlarmBroadCastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_IMMUTABLE)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val firingCal = Calendar.getInstance()
+        val currentCal = Calendar.getInstance()
+        val randomNum = 6 + (Math.random() * 18).toInt()
+
+        val randomNum2 = 6 + (Math.random() * 18).toInt()
+        firingCal.set(Calendar.HOUR_OF_DAY, randomNum) // At the hour you wanna fire
+        firingCal.set(Calendar.MINUTE, randomNum2) // Particular minute
+        firingCal.set(Calendar.SECOND, 0) // particular second
+
+        var intendedTime = firingCal.timeInMillis
+        val currentTime = currentCal.timeInMillis
+
+        if (intendedTime >= currentTime) {
+            // you can add buffer time too here to ignore some small differences in milliseconds
+            // set from today
+            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+        } else {
+            // set from next day
+            // you might consider using calendar.add() for adding one day to the current day
+            firingCal.add(Calendar.DAY_OF_MONTH, 1)
+            intendedTime = firingCal.timeInMillis
+
+            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+        }
+
+
+        adRequest = AdRequest.Builder().build()
 
         activeFragment   = fragmentOptimize
 

@@ -20,6 +20,8 @@ import android.view.animation.DecelerateInterpolator
 import com.yandex.metrica.impl.ob.pb
 
 import android.animation.ObjectAnimator
+import android.os.Handler
+import android.os.Looper
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -48,6 +50,18 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
             (requireActivity()as MainActivity).binding.bnvNav.visibility = View.VISIBLE
             binding.avBanner.loadAd(adRequest)
         }
+
+        val updateTask: Runnable = object : Runnable {
+            override fun run() {
+                if(requireActivity().intent.extras?.get("whattodo") !=null){
+                    if(requireActivity().intent.extras?.get("whattodo")?.equals("boost")!!){
+                        binding.materialButton.performClick()
+                    }
+                }
+            }}
+
+        handler.postDelayed(updateTask, 10)
+
         InterstitialAd.load(requireContext(),getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
 
@@ -110,6 +124,7 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
         animation.start()
     }
 
+    val handler = Handler(Looper.getMainLooper())
     override fun onHiddenChanged(hidden: Boolean) {
         if(!hidden){
 
@@ -131,6 +146,7 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
 val totalsize = Formatter.formatFileSize(requireContext(), nativeHeapSize)
     val usedsize = Formatter.formatFileSize(requireContext(), usedMemInBytes)
         binding.tvRamUsedFromTo.text = "$usedsize / $totalsize"
+
         val animation = ObjectAnimator.ofFloat(binding.crpvProgress, "percent", 0f, usedMemInPercentage.toFloat())
         animation.duration = 2000
         animation.interpolator = DecelerateInterpolator()

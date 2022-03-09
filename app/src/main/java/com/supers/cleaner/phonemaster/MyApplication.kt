@@ -10,15 +10,23 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.onesignal.OneSignal
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 
 class MyApplication : Application() {
+     val ONESIGNAL_APP_ID = "ebfe226a-58ee-4caa-8b48-08938c1db416"
 
     override fun onCreate() {
         super.onCreate()
         var adRequest = AdRequest.Builder().build()
         sInstance = this
+        // Logging set to help debug issues, remove before releasing your app.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId(ONESIGNAL_APP_ID)
         InterstitialAd.load(this,getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                    mInterstitialAd = null
@@ -52,6 +60,7 @@ class MyApplication : Application() {
         }
         @JvmField
         var worktime: String = ""
+        var boost:Boolean= false
          var mInterstitialAd: InterstitialAd? = null
         var premiumUser: Boolean = false
         var showuserpolicy: Boolean = false

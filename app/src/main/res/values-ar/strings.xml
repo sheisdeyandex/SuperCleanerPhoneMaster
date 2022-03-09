@@ -44,10 +44,4 @@
     <string name="closing_apps_next">إغلاق جميع وظائف استهلاك الطاقة</string>
     <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
     <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
-    <string name="free" translatable="false">free</string>
-    <string name="used_apps" translatable="false">used_apps</string>
-    <string name="remove" translatable="false">remove</string>
-
-    <string name="cache" translatable="false">cache</string>
-    <string name="ok" translatable="false">ok</string>
 </resources>

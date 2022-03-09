@@ -20,9 +20,9 @@
         android:id="@+id/clean_trash"
         android:icon="@drawable/ic_clean_trash"
         android:title="" />
-<!--    <item-->
-<!--        android:id="@+id/no_ads"-->
-<!--        android:icon="@drawable/ic_no_ads"-->
-<!--        android:title="" />-->
+    <item
+        android:id="@+id/no_ads"
+        android:icon="@drawable/ic_no_ads"
+        android:title="" />
 
 </menu>

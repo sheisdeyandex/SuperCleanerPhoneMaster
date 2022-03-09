@@ -1,4 +1,5 @@
 plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
     id 'com.android.application'
     id 'kotlin-android'
 }
@@ -36,6 +37,7 @@ android {
 
 dependencies {
     def lottieVersion = "3.4.0"
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'com.google.android.gms:play-services-ads:20.5.0'
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")

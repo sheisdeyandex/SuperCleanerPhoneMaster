@@ -1,4 +1,5 @@
 package com.supers.cleaner.phonemaster
+import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -6,6 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Context.NOTIFICATION_SERVICE
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.supers.cleaner.phonemaster.ui.MainActivity
 
 /**
@@ -14,18 +17,16 @@ import com.supers.cleaner.phonemaster.ui.MainActivity
 
 class AlarmBroadCastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-
-        //Toast.makeText(context, "HGello", Toast.LENGTH_SHORT).show();
-
         val notificationIntent = Intent(context, MainActivity::class.java)
         val intentt = PendingIntent.getActivity(context, 0,
-                notificationIntent, 0)
-        val notification = Notification.Builder(context)
+                notificationIntent, PendingIntent.FLAG_IMMUTABLE)
+        val notification = NotificationCompat.Builder(context,"com.supers.cleaner.phonemaster.channelId")
                 .setContentTitle(context.resources.getString(R.string.title_notefication))
                 .setContentText(context.resources.getString(R.string.detail_notification))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(intentt).setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
+
                 .build()
         val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 

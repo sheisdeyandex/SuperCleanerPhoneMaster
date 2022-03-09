@@ -14,6 +14,7 @@ import com.supers.cleaner.phonemaster.interfaces.IFragment
 
 
 class SplashScreen(iFragment: IFragment) : Fragment() {
+
     val  iFragment:IFragment = iFragment
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
