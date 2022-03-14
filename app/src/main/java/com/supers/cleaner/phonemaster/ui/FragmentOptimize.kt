@@ -23,6 +23,7 @@ import android.animation.ObjectAnimator
 import android.os.Handler
 import android.os.Looper
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -31,8 +32,8 @@ import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 
-class FragmentOptimize(iBanner:IBanner) : Fragment() {
-    val iBanner:IBanner = iBanner
+class FragmentOptimize() : Fragment() {
+
     private var _binding: FragmentOptimizeBinding? = null
     private val binding get() = _binding!!
 
@@ -43,24 +44,28 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
     ): View {
         _binding = FragmentOptimizeBinding.inflate(inflater, container, false)
         val view = binding.root
+     //   binding.handler = this
         getRamUsageInfo()
         var   adRequest = AdRequest.Builder().build()
+if(MyApplication.optimize){
+    optimize()
+}
         if(!MyApplication.premiumUser){
 
-            (requireActivity()as MainActivity).binding.bnvNav.visibility = View.VISIBLE
-            binding.avBanner.loadAd(adRequest)
+       //     (requireActivity()as MainActivity).binding.bnvNav.visibility = View.VISIBLE
+
         }
 
-        val updateTask: Runnable = object : Runnable {
-            override fun run() {
-                if(requireActivity().intent.extras?.get("whattodo") !=null){
-                    if(requireActivity().intent.extras?.get("whattodo")?.equals("boost")!!){
-                        binding.materialButton.performClick()
-                    }
-                }
-            }}
+//        val updateTask: Runnable = object : Runnable {
+//            override fun run() {
+//                if(requireActivity().intent.extras?.get("whattodo") !=null){
+//                    if(requireActivity().intent.extras?.get("whattodo")?.equals("boost")!!){
+//                        binding.materialButton.performClick()
+//                    }
+//                }
+//            }}
 
-        handler.postDelayed(updateTask, 10)
+//        handler.postDelayed(updateTask, 10)
 
         InterstitialAd.load(requireContext(),getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
@@ -125,12 +130,6 @@ class FragmentOptimize(iBanner:IBanner) : Fragment() {
     }
 
     val handler = Handler(Looper.getMainLooper())
-    override fun onHiddenChanged(hidden: Boolean) {
-        if(!hidden){
-
-        }
-    }
-
     private fun isSystemPackage(pkgInfo: ApplicationInfo): Boolean {
         return pkgInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
     }

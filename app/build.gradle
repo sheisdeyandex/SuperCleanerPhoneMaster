@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.supers.cleaner.phonemaster"
-        minSdk 22
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -36,6 +39,11 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation("com.github.terrakok:cicerone:7.1")
+
     def lottieVersion = "3.4.0"
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
     implementation "com.airbnb.android:lottie:$lottieVersion"
@@ -58,6 +66,17 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.test:core-ktx:1.4.0'
     testImplementation 'junit:junit:4.13.2'
+
+    implementation 'androidx.preference:preference-ktx:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:truth:1.4.0'
+    androidTestImplementation 'com.google.truth:truth:1.1.3'
+
+    androidTestImplementation 'androidx.test:core:1.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+
 }

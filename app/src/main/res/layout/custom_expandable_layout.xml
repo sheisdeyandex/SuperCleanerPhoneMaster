@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_height="252dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/custom_layer_list_notification"
+android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_height="130dp">
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:id="@+id/ll_boost"
+    android:layout_gravity="center_vertical"
+    android:layout_height="wrap_content">
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+android:id="@+id/iv_booster"
+    android:layout_gravity="center_horizontal"
+    android:src="@drawable/ic_booster_notification"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boost_notification"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="2dp"
+
+        />
+</LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/ll_energy_saving"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_energy_saving"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_energy_saving"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/energy_saving_notify"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/ll_coolcpu"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_coolcpu"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_cool_cpu_notification"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cpu"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/ll_clean"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_clean"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_clean"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/ll_others"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_others"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_others"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/others"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+
+                />
+        </LinearLayout>
+</LinearLayout>
+</RelativeLayout>

@@ -6,20 +6,11 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
      tools:context=".ui.FragmentCoolCpuAnim">
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/av_banner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:adSize="@string/banner_size"
-        app:adUnitId="@string/banner_id"/>
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         app:layoutDescription="@xml/fragment_cool_cpu_anim_scene"
         android:id="@+id/ml_cool_cpu_anim"
-app:layout_constraintTop_toBottomOf="@+id/av_banner"
+app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="0dp">
     <com.google.android.material.card.MaterialCardView

@@ -5,6 +5,7 @@ import android.app.Application
 import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.github.terrakok.cicerone.Cicerone
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
@@ -16,10 +17,11 @@ import com.yandex.metrica.YandexMetricaConfig
 
 class MyApplication : Application() {
      val ONESIGNAL_APP_ID = "ebfe226a-58ee-4caa-8b48-08938c1db416"
-
+    private val cicerone = Cicerone.create()
+    val router get() = cicerone.router
+    val navigatorHolder get() = cicerone.getNavigatorHolder()
     override fun onCreate() {
         super.onCreate()
-        var adRequest = AdRequest.Builder().build()
         sInstance = this
         // Logging set to help debug issues, remove before releasing your app.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
@@ -27,31 +29,11 @@ class MyApplication : Application() {
         // OneSignal Initialization
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
-        InterstitialAd.load(this,getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                   mInterstitialAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-
-                mInterstitialAd = interstitialAd
-            }
-        })
-
-
-//        adchnage.observable.subscribe({
-//            adview!!.loadAd(adRequest)
-//            Log.d("sukaloaded","yes")
-//        },{throwable -> Log.d("sukaloaded",throwable.message.toString())}){
-//
-//        }
-
-
         activateAppMetrica()
     }
     companion object {
-        private lateinit var sInstance: MyApplication
-
+        lateinit var sInstance: MyApplication
+            private set
         fun getInstance(): MyApplication {
             return sInstance
         }
@@ -60,11 +42,16 @@ class MyApplication : Application() {
         }
         @JvmField
         var worktime: String = ""
-        var boost:Boolean= false
-         var mInterstitialAd: InterstitialAd? = null
+        var finalUltraModeUsageTime: String = ""
+        var finalExtremeModeUsageTime: String = ""
+        var optimize:Boolean= false
+        var energysaving:Boolean= false
+        var coolcpu:Boolean= false
+        var clean:Boolean= false
+        var others:Boolean= false
+        var notificationClicked:Boolean= false
         var premiumUser: Boolean = false
         var showuserpolicy: Boolean = false
-        var adloaded: Boolean = false
         var bluetoothPermissionGranted: Boolean = false
         var animImageDrawable: Drawable? = null
         var animImageDrawableSecond: Drawable? = null

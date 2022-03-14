@@ -49,4 +49,12 @@
     <string name="left_files">Atık Dosyalar</string>
     <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
     <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
+    <string name="instruments">Araçlar</string>
+    <string name="app_manager">Uygulama Yöneticisi</string>
+    <string name="tips">Sovyet</string>
+    <string name="premium">Smart Cleaner Premium\'u Etkinleştir</string>
+    <string name="premium_full_text">"Yapmak için reklam yok
+Premium düzeyde deneyim kazanın.
+Tüm hizmetlerin tadını çıkarın"</string>
+    <string name="delete">Kaldırmak</string>
 </resources>

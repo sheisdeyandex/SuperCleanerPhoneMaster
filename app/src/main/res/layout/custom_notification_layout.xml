@@ -2,31 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#252B2C"
-    android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginStart="10dp"
-    android:id="@+id/ll_boost"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_height="wrap_content">
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-android:id="@+id/iv_booster"
-    android:layout_gravity="center_horizontal"
-    android:src="@drawable/ic_booster_notification"
-    />
+    android:background="@drawable/background_collapsed_notifications"
+    android:layout_height="48dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/boost_notification"
-        android:layout_below="@+id/iv_booster"
-        android:textColor="@color/white"
-        android:layout_marginTop="2dp"
+android:text="@string/app_name"
+        android:textColor="#00ffffff"
 
+        android:id="@+id/notification_title"
+        style="@style/TextAppearance.Compat.Notification.Title"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/ll_boost"
+    android:layout_centerVertical="true"
+    android:weightSum="5"
+    android:layout_height="wrap_content">
+<ImageView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+android:id="@+id/iv_booster"
+    android:layout_weight="1"
+    android:src="@drawable/ic_booster_notification"
+    />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_energy_saving"
+        android:layout_weight="1"
+        android:src="@drawable/ic_energy_saving"
+        />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_coolcpu"
+        android:layout_weight="1"
+        android:src="@drawable/ic_cool_cpu_notification"
+        />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_clean"
+        android:layout_weight="1"
+        android:src="@drawable/ic_clean_notification"
+        />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_others"
+        android:layout_weight="1"
+        android:src="@drawable/ic_others"
         />
 </LinearLayout>
 </RelativeLayout>

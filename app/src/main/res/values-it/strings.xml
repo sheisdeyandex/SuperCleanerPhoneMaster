@@ -49,4 +49,12 @@
     <string name="closing_apps_next">Chiusura di tutte le funzionalità di maggior consumo energetico</string>
     <string name="reduce_app_light_80">Limita luminosità all’80%</string>
     <string name="close_all">Chiude i servizi di sistema come Bluetooth, rotazione schermo, sincronizzazione, ecc.</string>
+    <string name="instruments">Strumenti</string>
+    <string name="app_manager">Gestore di applicazioni</string>
+    <string name="tips">Suggerimenti</string>
+    <string name="premium">Attivare Smart Cleaner Premium</string>
+    <string name="premium_full_text">"Nessuna pubblicità per rendere il vostro
+ l'esperienza di un premio.
+ Godetevi tutti i servizi"</string>
+    <string name="delete">Cancellare</string>
 </resources>

@@ -53,4 +53,12 @@
     <string name="closing_apps_next">Закрытие всех энергопотребляющих функций</string>
     <string name="reduce_app_light_80">Уменьшение яркости до 80%</string>
     <string name="close_all">Отключение системных сервисов, таких как Bluetooth, Ориентация, Синхронизация и т.д.</string>
+
+    <string name="boost_notification">Ускорить</string>
+    <string name="instruments">Инструменты</string>
+    <string name="app_manager">Менеджер приложений</string>
+    <string name="tips">Советы</string>
+    <string name="premium">Активировать Smart Cleaner Premium</string>
+    <string name="premium_full_text">Никакой рекламы, чтобы сделать ваш опыт работы на премиальном уровне. Наслаждайтесь всеми услугами</string>
+    <string name="delete">Удалить</string>
 </resources>

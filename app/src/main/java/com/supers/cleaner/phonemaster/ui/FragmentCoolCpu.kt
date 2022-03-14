@@ -17,17 +17,19 @@ import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.databinding.FragmentCoolCpuBinding
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.lang.Exception
 import java.text.DecimalFormat
 
-class FragmentCoolCpu(iFragment: IFragment, iBanner: IBanner) : Fragment() {
+class FragmentCoolCpu() : Fragment() {
     private var _binding: FragmentCoolCpuBinding? = null
     private val binding get() = _binding!!
-    val iFragment:IFragment = iFragment
-    val iBanner:IBanner = iBanner
+
     var countapps=0
     private fun getFileSize(size: Long): String {
         if (size <= 0) return "0"
@@ -110,20 +112,42 @@ countapps++
     private fun isSystemPackage(pkgInfo: PackageInfo): Boolean {
         return pkgInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
     }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCoolCpuBinding.inflate(inflater, container, false)
         val view = binding.root
-        var   adRequest = AdRequest.Builder().build()
-        if(!MyApplication.premiumUser){
-            binding.avBanner.loadAd(adRequest)
-        }
-
         binding.tvCpuText.text = cpuTemperature().toString()+"℃"
+
+
+                if(MyApplication.coolcpu){
+                    binding.ivCpu.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_cpu_finished))
+                    binding.tvOverheat.text = getString(R.string.normal)
+                    binding.tvOverheat.setTextColor(Color.parseColor("#73EE48"))
+                    binding.tvCpuText.text = ((cpuTemperature()-3.5f).toString())
+
+                    binding.animationView.setAnimation(R.raw.blue_ellipse)
+                    binding.animationView.playAnimation()
+                    binding.animationView.loop(true)
+                    binding.materialButtonDoIt.background = ContextCompat.getDrawable(requireContext(), R.drawable.optimize_button_optimized)
+                    binding.tvUltrapowertext.text = getString(R.string.normal_cpu_temperature)
+                    binding.tvUltrapowertext.setTextColor(Color.parseColor("#73EE48"))
+                    binding.materialButtonDoIt.isClickable = false
+                    binding.materialButtonDoIt.text = getString(R.string.cooled)
+                    binding.vView.visibility = View.GONE
+                    binding.clBottomApps.visibility = View.GONE
+                }
+
+
+
         binding.materialButtonDoIt.setOnClickListener {
-            iFragment.regulateCPUAnim(false, 1)
+
+            (requireActivity() as MainActivity).selectTab("coolcpuanim")
+            (requireActivity() as MainActivity).binding.bnvNav.visibility = View.GONE
             object :CountDownTimer(2000,1000){
                 override fun onTick(p0: Long) {
 

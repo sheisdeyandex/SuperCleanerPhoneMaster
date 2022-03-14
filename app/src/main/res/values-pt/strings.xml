@@ -49,5 +49,12 @@
     <string name="left_files">Arquivos\nresiduais</string>
     <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
     <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
-
+    <string name="instruments">Ferramentas</string>
+    <string name="app_manager">Gerente de aplicação</string>
+    <string name="tips">Dicas</string>
+    <string name="premium">Ativar o Smart Cleaner Premium</string>
+    <string name="premium_full_text">"Nenhuma publicidade para fazer seu
+ experiência a um prêmio.
+ Desfrute de todos os serviços"</string>
+    <string name="delete">Excluir</string>
 </resources>

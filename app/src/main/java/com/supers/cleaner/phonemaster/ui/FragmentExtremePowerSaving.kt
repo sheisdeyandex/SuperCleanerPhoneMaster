@@ -12,21 +12,7 @@ import com.supers.cleaner.phonemaster.databinding.FragmentExtremePowerSavingBind
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
 
-class FragmentExtremePowerSaving(ultrapowerText:String,iFragment: IFragment,iBanner: IBanner ) : Fragment() {
-    val ultrapowerText:String
-    val iFragment:IFragment
-    val iBanner = iBanner
-init {
-    this.iFragment = iFragment
-    this.ultrapowerText = ultrapowerText
-}
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        if(!hidden){
-
-        }
-    }
-
+class FragmentExtremePowerSaving : Fragment() {
     private var _binding: FragmentExtremePowerSavingBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -35,19 +21,17 @@ init {
     ): View {
         _binding = FragmentExtremePowerSavingBinding.inflate(inflater, container, false)
         val view = binding.root
-        var   adRequest = AdRequest.Builder().build()
-        if(!MyApplication.premiumUser){
-            binding.avBanner.loadAd(adRequest)
-        }
-        binding.tvUltrapowertext.text = binding.tvUltrapowertext.text.toString() +" "+ ultrapowerText
+        (requireActivity() as MainActivity).binding.bnvNav.visibility = View.GONE
+         binding.tvUltrapowertext.text = binding.tvUltrapowertext.text.toString() +" "+ MyApplication.finalExtremeModeUsageTime
 binding.tvHoursText.text = "(+4 ч. 00 м.)"
         binding.materialButtonDoIt.setOnClickListener {
-            MyApplication.worktime =  ultrapowerText
-            iFragment.regulate(false, 5)
+            MyApplication.worktime =  MyApplication.finalExtremeModeUsageTime
+            (requireActivity() as MainActivity).selectTab("extrememodeanim")
             binding.animationView.setAnimation(R.raw.blue_ellipse)
             binding.animationView.playAnimation()
             binding.animationView.loop(true)
         }
+
         return view
     }
 

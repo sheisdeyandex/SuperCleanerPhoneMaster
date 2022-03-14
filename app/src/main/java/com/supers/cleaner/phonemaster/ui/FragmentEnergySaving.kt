@@ -21,23 +21,10 @@ import com.supers.cleaner.phonemaster.databinding.FragmentEnergySavingBinding
 import com.supers.cleaner.phonemaster.interfaces.AskPermissions
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
-class FragmentEnergySaving(iFragment: IFragment, askPermissions: AskPermissions, iBanner: IBanner) : Fragment() {
-    var iFragment:IFragment
-val iBanner:IBanner = iBanner
-    val askPermissions:AskPermissions = askPermissions
-    init {
-        this.iFragment = iFragment
-    }
-
+class FragmentEnergySaving : Fragment() {
     private var _binding: FragmentEnergySavingBinding? = null
     private val binding get() = _binding!!
     val handler = Handler(Looper.getMainLooper())
-    override fun onHiddenChanged(hidden: Boolean) {
-        if(!hidden){
-
-        }
-    }
-
     var mInterstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +32,6 @@ val iBanner:IBanner = iBanner
     ): View {
         _binding = FragmentEnergySavingBinding.inflate(inflater, container, false)
         val view = binding.root
-        var   adRequest = AdRequest.Builder().build()
-        if(!MyApplication.premiumUser){
-            binding.avBanner.loadAd(adRequest)
-        }
         val infielder = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         val batteryStatus = requireActivity().registerReceiver(null, infielder)
         val level = batteryStatus!!.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
@@ -61,6 +44,7 @@ val iBanner:IBanner = iBanner
                 handler.postDelayed(this, 10)
             }
         }
+        var adRequest = AdRequest.Builder().build()
         handler.postDelayed(updateTask, 10)
         binding.tvEnergyPercent.text = "$level%"
         binding.ywView.progress = level
@@ -79,10 +63,12 @@ val iBanner:IBanner = iBanner
             }
         })
 binding.vNormalMode.setOnClickListener {
+    binding.vNormalMode.isClickable = false
     if(MyApplication.bluetoothPermissionGranted){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                iFragment.regulate(false,1)
+
+            (requireActivity() as MainActivity).selectTab("normalmode")
 
 
 
@@ -96,22 +82,24 @@ binding.vNormalMode.setOnClickListener {
             binding.animationView.playAnimation()
             binding.animationView.loop(true)
             binding.vNormalMode.isClickable =false
-            iFragment.regulate(false,1)
+
+            (requireActivity() as MainActivity).selectTab("normalmode")
         }
     }
     else{
-        askPermissions.requestBlueTooth()
+      //  askPermissions.requestBlueTooth()
     }
 }
         binding.vUltraMode.setOnClickListener {
+            binding.vUltraMode.isClickable = false
             if(MyApplication.bluetoothPermissionGranted){
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                         binding.vUltraMode.isClickable =false
-                        iFragment.regulate(false,2)
-
+                      //  iFragment.regulate(false,2)
+                    (requireActivity() as MainActivity).selectTab("ultramode")
                     binding.animationView.setAnimation(R.raw.blue_ellipse)
                     binding.animationView.playAnimation()
                     binding.animationView.loop(true)
@@ -120,23 +108,24 @@ binding.vNormalMode.setOnClickListener {
                 else{
 
                     binding.vUltraMode.isClickable =false
-                    iFragment.regulate(false,2)
+                    (requireActivity() as MainActivity).selectTab("ultramode")
                     binding.animationView.setAnimation(R.raw.blue_ellipse)
                     binding.animationView.playAnimation()
                     binding.animationView.loop(true)
                 }
             }
             else{
-                askPermissions.requestBlueTooth()
+              //  askPermissions.requestBlueTooth()
             }
         }
         binding.vExtremeMode.setOnClickListener {
+            binding.vExtremeMode.isClickable = false
             if(MyApplication.bluetoothPermissionGranted){
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                         binding.vExtremeMode.isClickable =false
-                        iFragment.regulate(false,3)
+                    (requireActivity() as MainActivity).selectTab("extrememode")
 
                     binding.animationView.setAnimation(R.raw.blue_ellipse)
                     binding.animationView.playAnimation()
@@ -146,7 +135,7 @@ binding.vNormalMode.setOnClickListener {
                 else{
 
                     binding.vExtremeMode.isClickable =false
-                    iFragment.regulate(false,3)
+                    (requireActivity() as MainActivity).selectTab("extrememode")
 
                     binding.animationView.setAnimation(R.raw.blue_ellipse)
                     binding.animationView.playAnimation()
@@ -154,7 +143,7 @@ binding.vNormalMode.setOnClickListener {
                 }
             }
             else{
-                askPermissions.requestBlueTooth()
+             //   askPermissions.requestBlueTooth()
             }
         }
 

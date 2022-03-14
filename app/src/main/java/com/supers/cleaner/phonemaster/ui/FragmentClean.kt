@@ -14,9 +14,8 @@ import com.supers.cleaner.phonemaster.databinding.FragmentCleanBinding
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
 
-class FragmentClean(iFragment: IFragment, iBanner: IBanner) : Fragment() {
-    val iFragment:IFragment = iFragment
-    val iBanner :IBanner = iBanner
+class FragmentClean : Fragment() {
+
     private var _binding: FragmentCleanBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -25,53 +24,44 @@ class FragmentClean(iFragment: IFragment, iBanner: IBanner) : Fragment() {
     ): View{
         _binding = FragmentCleanBinding.inflate(inflater, container, false)
         val view = binding.root
-        var   adRequest = AdRequest.Builder().build()
-        if(!MyApplication.premiumUser){
-            binding.avBanner.loadAd(adRequest)
-        }
-
+if(MyApplication.clean){
+changeAnim()
+}
         binding.materialButtonDoIt.setOnClickListener {
-            iFragment.regulate(false,6)
-            object :CountDownTimer(2000,1000){
-                override fun onTick(p0: Long) {
-
-                }
-
-                override fun onFinish() {
-                    binding.animationView.setAnimation(R.raw.blue_ellipse)
-                    binding.materialButtonDoIt.isClickable = false
-                    binding.tvAlot1.text = getString(R.string.cleaned)
-                    binding.tvAlot2.text = getString(R.string.cleaned)
-                    binding.tvAlot3.text = getString(R.string.cleaned)
-                    binding.tvAlot4.text = getString(R.string.cleaned)
-                    binding.tvOverheat.text = getString(R.string.crystal_clear)
-                    binding.tvOverheat.setTextColor(Color.parseColor("#73EE48"))
-                    binding.ivComponent1.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_1_1))
-                    binding.ivComponent2.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_2_1))
-                    binding.ivComponent3.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_4_1))
-                    binding.ivComponent4.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_3_1))
-                    binding.tvAlot1.setTextColor(Color.parseColor("#73EE48"))
-                    binding.tvAlot2.setTextColor(Color.parseColor("#73EE48"))
-                    binding.tvAlot3.setTextColor(Color.parseColor("#73EE48"))
-                    binding.tvAlot4.setTextColor(Color.parseColor("#73EE48"))
-                    binding.materialButtonDoIt.background = ContextCompat.getDrawable(requireContext(), R.drawable.optimize_button_optimized)
-                    binding.materialButtonDoIt.text = getText(R.string.cleaned_button)
-                    binding.ivClean.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_clean_cleaned))
-                }
-
-            }.start()
-
+            (requireActivity() as MainActivity).selectTab("cleananim")
+            (requireActivity() as MainActivity).binding.bnvNav.visibility= View.GONE
+changeAnim()
         }
         return view
     }
+    fun changeAnim(){
+        object :CountDownTimer(2000,1000){
+            override fun onTick(p0: Long) {
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        if(!hidden){
-         var   adRequest = AdRequest.Builder().build()
-            if(!MyApplication.premiumUser){
-                binding.avBanner.loadAd(adRequest)
             }
 
-        }
+            override fun onFinish() {
+                binding.animationView.setAnimation(R.raw.blue_ellipse)
+                binding.materialButtonDoIt.isClickable = false
+                binding.tvAlot1.text = getString(R.string.cleaned)
+                binding.tvAlot2.text = getString(R.string.cleaned)
+                binding.tvAlot3.text = getString(R.string.cleaned)
+                binding.tvAlot4.text = getString(R.string.cleaned)
+                binding.tvOverheat.text = getString(R.string.crystal_clear)
+                binding.tvOverheat.setTextColor(Color.parseColor("#73EE48"))
+                binding.ivComponent1.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_1_1))
+                binding.ivComponent2.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_2_1))
+                binding.ivComponent3.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_4_1))
+                binding.ivComponent4.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_component_3_1))
+                binding.tvAlot1.setTextColor(Color.parseColor("#73EE48"))
+                binding.tvAlot2.setTextColor(Color.parseColor("#73EE48"))
+                binding.tvAlot3.setTextColor(Color.parseColor("#73EE48"))
+                binding.tvAlot4.setTextColor(Color.parseColor("#73EE48"))
+                binding.materialButtonDoIt.background = ContextCompat.getDrawable(requireContext(), R.drawable.optimize_button_optimized)
+                binding.materialButtonDoIt.text = getText(R.string.cleaned_button)
+                binding.ivClean.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_clean_cleaned))
+            }
+
+        }.start()
     }
 }

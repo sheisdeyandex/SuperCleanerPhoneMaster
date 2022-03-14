@@ -1,45 +1,56 @@
 package com.supers.cleaner.phonemaster.ui
-import android.app.*
-import android.content.Context
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
-import android.view.View
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.Fragment
-import com.supers.cleaner.phonemaster.databinding.ActivityMainBinding
-import com.supers.cleaner.phonemaster.R
-import com.supers.cleaner.phonemaster.interfaces.IFragment
-import androidx.core.app.ActivityCompat
-
-import android.widget.Toast
-
 import android.content.pm.PackageManager
-import android.media.AudioAttributes
-import android.media.RingtoneManager
-import android.os.*
-import android.provider.Settings
+import android.os.BatteryManager
+import android.os.Build
+import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
-import android.widget.RemoteViews
-import androidx.core.app.NotificationCompat
-
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.ads.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.github.terrakok.cicerone.androidx.FragmentScreen
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.supers.cleaner.phonemaster.AlarmBroadCastReceiver
 import com.supers.cleaner.phonemaster.AlarmReceiver
 import com.supers.cleaner.phonemaster.MyApplication
+import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.Utils.PreferencesProvider
+import com.supers.cleaner.phonemaster.databinding.ActivityMainBinding
 import com.supers.cleaner.phonemaster.interfaces.AskPermissions
-import com.supers.cleaner.phonemaster.interfaces.IBanner
-import com.supers.cleaner.phonemaster.services.CleanService
+import com.supers.cleaner.phonemaster.interfaces.IFragment
+import com.supers.cleaner.phonemaster.services.WidgetBroadCastReceiver
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
+class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
+    lateinit var binding:ActivityMainBinding
+    val fm = supportFragmentManager
+    var mInterstitialAd: InterstitialAd? = null
+    lateinit var adRequest: AdRequest
+    lateinit var finalExtremeModeUsageTime:String
+    private lateinit var navController: NavController
+    private val navigator =object: AppNavigator(this, R.id.cl_main){
+        override fun setupFragmentTransaction(
+            screen: FragmentScreen,
+            fragmentTransaction: FragmentTransaction,
+            currentFragment: Fragment?,
+            nextFragment: Fragment)
+        {}
+    }
     override fun requestBlueTooth() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             askForPermission(android.Manifest.permission.BLUETOOTH_CONNECT, 1)
@@ -48,28 +59,11 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
             MyApplication.bluetoothPermissionGranted = true
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("sukawtf", requestCode.toString())
     }
 
-    lateinit var binding:ActivityMainBinding
-    val fm = supportFragmentManager
-    private lateinit var activeFragment: Fragment
-    private val fragmentOptimize = FragmentOptimize(this)
-    private val webViewFragment = WebViewFragment(this)
-    private val fragmentClean = FragmentClean(this  ,this)
-    private val fragmentCleanAnim = FragmentCleanAnim(this,this)
-    private val fragmentCoolCpu = FragmentCoolCpu(this,this)
-    private val fragmentCoolCpuAnim = FragmentCoolCpuAnim(this, this)
-    private val fragmentNormalMode = FragmentNormalMode(this,this)
-    private lateinit var fragmentExtremeMode :Fragment
-    private lateinit var splashScreen: SplashScreen
-    private lateinit var fragmentExtremeModeAnim :Fragment
-    private lateinit var fragmentUltraModeAnim :Fragment
-    private lateinit var fragmentUltraMode :Fragment
-    private val fragmentEnergySaving=FragmentEnergySaving(this, this,this)
     private fun askForPermission(permission: String, requestCode: Int) {
         if (ContextCompat.checkSelfPermission(applicationContext, permission)
             != PackageManager.PERMISSION_GRANTED
@@ -96,42 +90,33 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions, IBanner{
             MyApplication.bluetoothPermissionGranted = true
         }
     }
-private fun setCustomNotification(){
-    val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-    val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    val notificationLayout = RemoteViews("com.supers.cleaner.phonemaster", R.layout.custom_notification_layout)
-//    val notificationIntent = Intent()
-//  //  intent.putExtra("whattodo","boost")
-//    val stackBuilder = TaskStackBuilder.create(applicationContext)
-//stackBuilder.addNextIntent(notificationIntent)
-////
-//    val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+//    private fun setCustomNotification(){
+//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        val notificationLayout = RemoteViews("com.supers.cleaner.phonemaster", R.layout.custom_notification_layout)
+////    val notificationIntent = Intent()
+////  //  intent.putExtra("whattodo","boost")
+////    val stackBuilder = TaskStackBuilder.create(applicationContext)
+////stackBuilder.addNextIntent(notificationIntent)
 //////
-//    notificationLayout.setOnClickPendingIntent(R.id.ll_boost, pendingIntent)
-    val customNotification = NotificationCompat.Builder(applicationContext, AlarmReceiver.CHANNEL_ID)
-        .setSmallIcon(R.drawable.ic_launcher_background)
-        .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-        .setCustomContentView(notificationLayout)
-        .setOngoing(true)
-        .build()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val channel = NotificationChannel(
-            AlarmReceiver.CHANNEL_ID,
-            resources.getString(R.string.app_name),
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        val audioAttributes = AudioAttributes.Builder()
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-            .build()
-        channel.setSound(alarmSound, audioAttributes)
-        notificationManager.createNotificationChannel(channel)
-    }
-
-
-    notificationManager.notify(0, customNotification)
-}
+////    val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+////////
+////    notificationLayout.setOnClickPendingIntent(R.id.ll_boost, pendingIntent)
+//        val customNotification = NotificationCompat.Builder(applicationContext, AlarmReceiver.CHANNEL_ID)
+//            .setSmallIcon(android.R.color.transparent)
+//            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+//            .setCustomContentView(notificationLayout)
+//            .setOngoing(true)
+//            .build()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val channel = NotificationChannel(
+//                AlarmReceiver.CHANNEL_ID,
+//                resources.getString(R.string.app_name),
+//                NotificationManager.IMPORTANCE_DEFAULT
+//            )
+//            notificationManager.createNotificationChannel(channel)
+//        }
+//        notificationManager.notify(0, customNotification)
+//    }
     private fun setNotification() {
         PreferencesProvider.getInstance().edit().putString("state_Head", resources.getString(R.string.notif_head))
             .putString("state_Body", resources.getString(R.string.notif_body))
@@ -147,13 +132,11 @@ private fun setCustomNotification(){
         if (now.after(calendar)) {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
-Log.d("sukatime", calendar.time.toString())
         val intent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = getSystemService(Activity.ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -170,325 +153,337 @@ Log.d("sukatime", calendar.time.toString())
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
-
-    fun addFragments(){
-
-       fm.beginTransaction().add(R.id.cl_main, webViewFragment).hide(webViewFragment).commit()
-       fm.beginTransaction().add(R.id.cl_main, fragmentCleanAnim).hide(fragmentCleanAnim).commit()
-       fm.beginTransaction().add(R.id.cl_main, fragmentClean).hide(fragmentClean).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentCoolCpuAnim).hide(fragmentCoolCpuAnim).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentCoolCpu).hide(fragmentCoolCpu).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentExtremeModeAnim).hide(fragmentExtremeModeAnim).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentExtremeMode).hide(fragmentExtremeMode).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentUltraModeAnim).hide(fragmentUltraModeAnim).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentUltraMode).hide(fragmentUltraMode).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentNormalMode).hide(fragmentNormalMode).commit()
-        fm.beginTransaction().add(R.id.cl_main, fragmentEnergySaving).hide(fragmentEnergySaving).commit()
-
-        fm.beginTransaction().add(R.id.cl_main, fragmentOptimize).commit()
-        fm.beginTransaction().hide(splashScreen).commit()
-
+    object Screens {
+        fun fragmentOptimize() = FragmentScreen { FragmentOptimize() }
+        fun fragmentEnergySaving() = FragmentScreen { FragmentEnergySaving() }
+        fun fragmentCoolCPU() = FragmentScreen { FragmentCoolCpu() }
+        fun fragmentCoolCPUAnim() = FragmentScreen { FragmentCoolCpuAnim() }
+        fun fragmentClean() = FragmentScreen { FragmentClean() }
+        fun fragmentCleanAnim() = FragmentScreen { FragmentCleanAnim() }
+        fun fragmentNoAds() = FragmentScreen { FraFragmentNoAds() }
+        fun fragmentSplash() = FragmentScreen { SplashScreen() }
+        fun fragmentNormalMode() = FragmentScreen { FragmentNormalMode() }
+        fun fragmentExtremePowerSaving() = FragmentScreen { FragmentExtremePowerSaving() }
+        fun fragmentExtremePowerSavingAnim() = FragmentScreen { FragmentExtremePowerSavingAnim() }
+        fun fragmentUltraPowerSaving() = FragmentScreen { FragmentUltraPowerSaving() }
+        fun fragmentUltraPowerSavingAnim() = FragmentScreen { FragmentUltraPowerSavingAnim() }
+        fun fragmentAppsManager() = FragmentScreen { FragmentApps() }
+    }
+    override fun onResume() {
+        super.onResume()
+        MyApplication.sInstance.navigatorHolder.setNavigator(navigator)
     }
 
-    private var handler: Handler? = null
-    var mInterstitialAd: InterstitialAd? = null
-    lateinit var adRequest: AdRequest
-    lateinit var finalUltraModeUsageTime:String
-    lateinit var finalExtremeModeUsageTime:String
+fun selectTab(tab: String) {
+    val fm = supportFragmentManager
+    var currentFragment: Fragment? = null
+    val fragments = fm.fragments
+    for (f in fragments) {
+        if (f.isVisible) {
+            currentFragment = f
+            break
+        }
+    }
+    val newFragment = fm.findFragmentByTag(tab)
+    if (currentFragment != null && newFragment != null && currentFragment === newFragment) return
+    val transaction = fm.beginTransaction()
+    if (newFragment == null) {
+        if(tab=="optimize"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentOptimize().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="energysaving"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentEnergySaving().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="coolcpu"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentCoolCPU().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="coolcpuanim"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentCoolCPUAnim().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="energysaving"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentEnergySaving().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="clean"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentClean().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="cleananim"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentCleanAnim().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="noads"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentNoAds().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="splash"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentSplash().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="ultramode"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentUltraPowerSaving().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="ultramodeanim"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentUltraPowerSavingAnim().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="extrememode"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentExtremePowerSaving().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="extrememodeanim"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentExtremePowerSavingAnim().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="normalmode"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentNormalMode().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+        else if(tab=="appsmanager"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentAppsManager().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
+    }
+    if (currentFragment != null) {
+        transaction.hide(currentFragment)
+    }
+    if (newFragment != null) {
+        transaction.show(newFragment)
+    }
+    transaction.commitNow()
+}
+    val BROADCAST = "com.supers.cleaner.phonemaster.android.action.broadcast"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-setCustomNotification()
-        setNotification()
-        handler = object : Handler(Looper.getMainLooper()) {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-                //TODO: if android <= Nougat startService
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
-                    val i = Intent(this@MainActivity, CleanService::class.java)
-                    i.putExtra("junk", "sa")
-                    this@MainActivity.startService(i)
-                } else {
-                }
 
+        val adRequest = AdRequest.Builder().build()
+        if(!MyApplication.premiumUser){
+            binding.avBanner.loadAd(adRequest)
+        }
+
+
+        if (intent.hasExtra("whattodo")) {
+            MyApplication.notificationClicked = true
+            binding.clSplash.visibility= View.GONE
+
+            binding.clOptimize.visibility = View.VISIBLE
+
+            if(intent.extras?.get("whattodo").toString() == "optimize"){
+                selectTab("optimize")
+                MyApplication.optimize = true
             }
-        }
-        val myIntent = Intent(this@MainActivity, AlarmBroadCastReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, myIntent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if(intent.extras?.get("whattodo").toString() == "energysaving"){
+            //    selectTab("energysaving")
+                binding.bnvNav.selectedItemId = R.id.nav_energy_saving
+                binding.clSplash.visibility = View.VISIBLE
+binding.clOptimize.visibility = View.GONE
+                MyApplication.energysaving = true
+            }
+            if(intent.extras?.get("whattodo").toString() == "coolcpu"){
+                selectTab("coolcpuanim")
+                binding.bnvNav.selectedItemId = R.id.fragmentCoolCPU
+                MyApplication.coolcpu = true
+            }
+            if(intent.extras?.get("whattodo").toString() == "clean"){
+                binding.bnvNav.selectedItemId = R.id.fragmentClean
+                selectTab("cleananim")
+                MyApplication.clean = true
+            }
+            if(intent.extras?.get("whattodo").toString() == "others"){
+                binding.bnvNav.selectedItemId = R.id.no_ads
+                binding.clSplash.visibility = View.VISIBLE
+                binding.clOptimize.visibility = View.GONE
 
-        val firingCal = Calendar.getInstance()
-        val currentCal = Calendar.getInstance()
-        val randomNum = 6 + (Math.random() * 18).toInt()
-
-        val randomNum2 = 6 + (Math.random() * 18).toInt()
-        firingCal.set(Calendar.HOUR_OF_DAY, randomNum) // At the hour you wanna fire
-        firingCal.set(Calendar.MINUTE, randomNum2) // Particular minute
-        firingCal.set(Calendar.SECOND, 0) // particular second
-
-        var intendedTime = firingCal.timeInMillis
-        val currentTime = currentCal.timeInMillis
-
-        if (intendedTime >= currentTime) {
-            // you can add buffer time too here to ignore some small differences in milliseconds
-            // set from today
-            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+                MyApplication.others = true
+            }
         } else {
-            // set from next day
-            // you might consider using calendar.add() for adding one day to the current day
-            firingCal.add(Calendar.DAY_OF_MONTH, 1)
-            intendedTime = firingCal.timeInMillis
-
-            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+            // Do something else
         }
 
 
-        adRequest = AdRequest.Builder().build()
-
-        activeFragment   = fragmentOptimize
-
-        val infielder = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        val batteryStatus = registerReceiver(null, infielder)
-        val level = batteryStatus!!.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        splashScreen = SplashScreen(this)
-
-        fm.beginTransaction().add(R.id.cl_main, splashScreen).commit()
-         finalUltraModeUsageTime = String.format("%.02f", level*10/100F-0.5F+2).replace(".", " ч. ").replace(",", " ч. ")+" м."
-         finalExtremeModeUsageTime = String.format("%.02f", level*10/100F-0.5F+4).replace(".", " ч. ").replace(",", " ч. ")+" м."
-        fragmentExtremeModeAnim = FragmentExtremePowerSavingAnim( this,this)
-        fragmentExtremeMode = FragmentExtremePowerSaving( finalExtremeModeUsageTime,this, this)
-        fragmentUltraMode  = FragmentUltraPowerSaving(finalUltraModeUsageTime, this,this)
-        fragmentUltraModeAnim  = FragmentUltraPowerSavingAnim(this,this)
-
-
+        initEnergySavingAnims()
         binding.bnvNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.optimize -> {
-                    fm.beginTransaction().hide(activeFragment).show(fragmentOptimize).commit()
-activeFragment = fragmentOptimize
-                   true
-                }
-                R.id.energy_saving -> {
-                    fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-                    activeFragment = fragmentEnergySaving
+                R.id.nav_graph_home -> {
+                    selectTab("optimize")
                     true
                 }
-                R.id.cool_cpu -> {
-                    fm.beginTransaction().hide(activeFragment).show(fragmentCoolCpu).commit()
-                    activeFragment = fragmentCoolCpu
+                R.id.nav_energy_saving -> {
+                    selectTab("energysaving")
                     true
                 }
-                R.id.clean_trash ->{
-                    fm.beginTransaction().hide(activeFragment).show(fragmentClean).commit()
-                    activeFragment = fragmentClean
+                R.id.fragmentCoolCPU ->{
+                    selectTab("coolcpu")
+                    true
+                }
+                R.id.fragmentClean ->{
+                    selectTab("clean")
+                    true
+                }
+                R.id.no_ads ->{
+                    selectTab("noads")
                     true
                 }
                 else -> false
             }}
-    //    hideSystemUI()
 
-
-        MobileAds.initialize(this) {}
-
-        InterstitialAd.load(this,getString(R.string.inter_id), adRequest, object : InterstitialAdLoadCallback() {
+        initInter()
+        requestBlueTooth()
+        val intent = Intent(BROADCAST)
+        val intentFilter = IntentFilter(BROADCAST)
+        registerReceiver(WidgetBroadCastReceiver(), intentFilter)
+sendBroadcast(intent)
+        setNotification()
+    }
+fun initEnergySavingAnims(){
+    val infielder = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+    val batteryStatus = registerReceiver(null, infielder)
+    val level = batteryStatus!!.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+    MyApplication.finalUltraModeUsageTime = String.format("%.02f", level*10/100F-0.5F+2).replace(".", " ч. ").replace(",", " ч. ")+" м."
+    MyApplication.finalExtremeModeUsageTime = String.format("%.02f", level*10/100F-0.5F+4).replace(".", " ч. ").replace(",", " ч. ")+" м."
+}
+fun initInter() {
+    adRequest = AdRequest.Builder().build()
+    MobileAds.initialize(this) {}
+    InterstitialAd.load(
+        this,
+        getString(R.string.inter_id),
+        adRequest,
+        object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                if (!MyApplication.showuserpolicy){
-                    addFragments()
-
-                    showInter()
+                if (!MyApplication.showuserpolicy) {
                     mInterstitialAd = null
+                    if(!MyApplication.notificationClicked){
 
+                        selectTab("optimize")
+                        binding.clSplash.visibility= View.GONE
+                        binding.clOptimize.visibility = View.VISIBLE
+                    }
+                    else{
+                        if(intent.extras?.get("whattodo").toString() == "energysaving"){
+                            selectTab("energysaving")
+                            binding.clSplash.visibility= View.VISIBLE
+                            binding.clOptimize.visibility = View.GONE
+                        }
+                        else if(intent.extras?.get("whattodo").toString() == "others"){
+                            selectTab("noads")
+                            binding.clSplash.visibility= View.VISIBLE
+                            binding.clOptimize.visibility = View.GONE
+                        }
+                    }
                 }
-                MyApplication.adloaded=true
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                if(!MyApplication.showuserpolicy){
-
+                if(intent.extras?.get("whattodo").toString() == "energysaving"){
                     interstitialAd.show(this@MainActivity)
-                    addFragments()
+                      selectTab("energysaving")
 
+                    object :CountDownTimer(1000,1000){
+                        override fun onTick(p0: Long) {
 
+                        }
+
+                        override fun onFinish() {
+                            binding.clSplash.visibility= View.GONE
+
+                            binding.clOptimize.visibility = View.VISIBLE
+                        }
+                    }.start()
                 }
-                MyApplication.adloaded=true
-                mInterstitialAd = interstitialAd
+                else   if(intent.extras?.get("whattodo").toString() == "others"){
+                    interstitialAd.show(this@MainActivity)
+                    selectTab("noads")
 
+                    object :CountDownTimer(1000,1000){
+                        override fun onTick(p0: Long) {
+
+                        }
+
+                        override fun onFinish() {
+                            binding.clSplash.visibility= View.GONE
+
+                            binding.clOptimize.visibility = View.VISIBLE
+                        }
+                    }.start()
+                }
+                else{
+                    if(!MyApplication.showuserpolicy) {
+                        if(!MyApplication.notificationClicked){
+                            selectTab("optimize")
+                            interstitialAd.show(this@MainActivity)
+
+                            object :CountDownTimer(1000,1000){
+                                override fun onTick(p0: Long) {
+
+                                }
+
+                                override fun onFinish() {
+                                    binding.clSplash.visibility= View.GONE
+
+                                    binding.clOptimize.visibility = View.VISIBLE
+                                }
+                            }.start()
+                        }
+
+                    }
+                }
+                mInterstitialAd = interstitialAd
             }
         })
-        requestBlueTooth()
-    }
 
 
-    override fun regulate(finished:Boolean, fragment:Int) {
-        if(fragment==1){
-            if(finished){
-binding.bnvNav.visibility = View.VISIBLE
-              fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-               activeFragment = fragmentEnergySaving
-                object :CountDownTimer(100,1000){
-                    override fun onTick(p0: Long) {
-
-                    }
-
-                    override fun onFinish() {
-                        if (  MyApplication.mInterstitialAd != null) {
-                            MyApplication.mInterstitialAd?.show(this@MainActivity)
-                        } else {
-                            Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                        }
-                    }
-
-                }.start()
-
-            } else{
-                binding.bnvNav.visibility = View.GONE
-
-                fm.beginTransaction().hide(activeFragment).show(fragmentNormalMode).commit()
-
-                activeFragment= fragmentNormalMode
-            }
-        }
-        else if(fragment==2){
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-                fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-               activeFragment = fragmentEnergySaving
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-
-            } else{
-                binding.bnvNav.visibility = View.GONE
-
-                fm.beginTransaction().hide(activeFragment).show(fragmentUltraMode).commit()
-               activeFragment= fragmentUltraMode
-            }
-        }
-        else if(fragment==3)
-        {
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-                 fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-               activeFragment = fragmentEnergySaving
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-            } else{
-                binding.bnvNav.visibility = View.GONE
-                fm.beginTransaction().hide(activeFragment).show(fragmentExtremeMode).commit()
-               activeFragment= fragmentExtremeMode
-            }
-        }
-        else if(fragment==4)
-        {
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-                fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-                activeFragment = fragmentEnergySaving
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-            } else{
-                binding.bnvNav.visibility = View.GONE
-                fm.beginTransaction().hide(activeFragment).show(fragmentUltraModeAnim).commit()
-               activeFragment= fragmentUltraModeAnim
-
-            }
-        }
-        else if(fragment==5)
-        {
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-
-                fm.beginTransaction().hide(activeFragment).show(fragmentEnergySaving).commit()
-                activeFragment = fragmentEnergySaving
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-            } else{
-                binding.bnvNav.visibility = View.GONE
-                supportFragmentManager.beginTransaction().detach(activeFragment).attach( fragmentExtremeModeAnim).commit()
-                fm.beginTransaction().hide(activeFragment).show(fragmentExtremeModeAnim).commit()
-            activeFragment= fragmentExtremeModeAnim
-            }
-        }
-        else if(fragment==6)
-        {
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-                supportFragmentManager.beginTransaction().detach(activeFragment).attach( fragmentEnergySaving).commit()
-                fm.beginTransaction().hide(activeFragment).show(fragmentClean).commit()
-              activeFragment = fragmentClean
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-            } else{
-                binding.bnvNav.visibility = View.GONE
-
-                fm.beginTransaction().hide(activeFragment).show(fragmentCleanAnim).commit()
-                activeFragment= fragmentCleanAnim
-            }
-        }
-        else if(fragment==7)
-        {
-            if(finished){
-                fm.beginTransaction().hide(webViewFragment).show(splashScreen).commit()
-                object :CountDownTimer(2000,1000){
-                    override fun onTick(p0: Long) {
-
-                    }
-
-                    override fun onFinish() {
-                        fm.beginTransaction().hide(splashScreen).show(fragmentOptimize).commit()
-                        binding.bnvNav.visibility = View.VISIBLE
-                        mInterstitialAd!!.show(this@MainActivity)
-                    }
-
-                }.start()
-
-            }
-            else{
-                fm.beginTransaction().hide(splashScreen).show(webViewFragment).commit()
-
-            }
-
-        }
-    }
-    override fun regulateCPUAnim(finished: Boolean, fragment: Int) {
-        if(fragment==1){
-            if(finished){
-                binding.bnvNav.visibility = View.VISIBLE
-                fm.beginTransaction().hide(activeFragment).show(fragmentCoolCpu).commit()
-                activeFragment = fragmentCoolCpu
-                if (  MyApplication.mInterstitialAd != null) {
-                    MyApplication.mInterstitialAd?.show(this@MainActivity)
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-            } else{
-                binding.bnvNav.visibility = View.GONE
-                fm.beginTransaction().hide(activeFragment).show(fragmentCoolCpuAnim).commit()
-                activeFragment= fragmentCoolCpuAnim
-            }
-        }
-    }
-
-    override fun changeBanner() {
-
-    }
-
-    override fun showInter() {
-
-    }
+}
 }

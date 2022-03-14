@@ -85,4 +85,15 @@
 
     <string name="language" translatable="false"></string>
     <string name="boost_notification">Ускорить</string>
+    <string name="instruments">Tools</string>
+    <string name="app_manager">App Manager</string>
+    <string name="tips">Tips</string>
+    <string name="premium">Activate Smart Cleaner Premiumm</string>
+    <string name="premium_full_text">"No advertising to make your
+ experience at a premium.
+ Enjoy all the services."</string>
+    <string name="delete">Uninstall</string>
+    <string name="energy_saving_notify">Батарея</string>
+    <string name="cpu">CPU</string>
+    <string name="others">Еще</string>
 </resources>

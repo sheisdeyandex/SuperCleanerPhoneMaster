@@ -13,9 +13,8 @@ import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.interfaces.IFragment
 
 
-class SplashScreen(iFragment: IFragment) : Fragment() {
+class SplashScreen : Fragment() {
 
-    val  iFragment:IFragment = iFragment
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
 
@@ -26,7 +25,6 @@ class SplashScreen(iFragment: IFragment) : Fragment() {
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.tvPrivacy.setOnClickListener {
-      iFragment.regulate(false,7)
             MyApplication.showuserpolicy = true
         }
         return view

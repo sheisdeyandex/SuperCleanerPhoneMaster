@@ -46,4 +46,12 @@
     <string name="closing_apps_next">Cerrando todas las funciones que consumen energía</string>
     <string name="reduce_app_light_80">Limit Brightness Up to 80%</string>
     <string name="close_all">Closes System Services like Bluetooth,Screen Rotation,Sync etc.</string>
+    <string name="instruments">Herramientas</string>
+    <string name="app_manager">Gestor de aplicaciones</string>
+    <string name="tips">Consejos</string>
+    <string name="premium">Activar Smart Cleaner Premium</string>
+    <string name="premium_full_text">"No hay publicidad para hacer su
+ la experiencia en un premio.
+ Disfruta de todos los servicios"</string>
+    <string name="delete">Borrar</string>
 </resources>

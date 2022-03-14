@@ -13,15 +13,7 @@ import com.supers.cleaner.phonemaster.databinding.FragmentUltraPowerSavingBindin
 import com.supers.cleaner.phonemaster.interfaces.IBanner
 import com.supers.cleaner.phonemaster.interfaces.IFragment
 
-class FragmentUltraPowerSaving(ultrapowerText:String, iFragment: IFragment, iBanner: IBanner) : Fragment() {
-
-    val ultrapowerText:String
-    val iFragment:IFragment
-    val iBanner:IBanner = iBanner
-    init {
-        this.iFragment = iFragment
-        this.ultrapowerText = ultrapowerText
-    }
+class FragmentUltraPowerSaving : Fragment() {
     private var _binding: FragmentUltraPowerSavingBinding? = null
     private val binding get() = _binding!!
 
@@ -31,15 +23,14 @@ class FragmentUltraPowerSaving(ultrapowerText:String, iFragment: IFragment, iBan
     ): View {
         _binding = FragmentUltraPowerSavingBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.tvUltrapowertext.text = binding.tvUltrapowertext.text.toString() +" "+ ultrapowerText
+        (requireActivity() as MainActivity).binding.bnvNav.visibility = View.GONE
+        binding.tvUltrapowertext.text = binding.tvUltrapowertext.text.toString() +" "+ MyApplication.finalUltraModeUsageTime
         binding.materialButtonDoIt.setOnClickListener {
-            MyApplication.worktime =  ultrapowerText
-            iFragment.regulate(false, 4)
-        }
+            MyApplication.worktime =  MyApplication.finalUltraModeUsageTime
+            (requireActivity() as MainActivity).selectTab("ultramodeanim")
+         }
         var   adRequest = AdRequest.Builder().build()
-        if(!MyApplication.premiumUser){
-            binding.avBanner.loadAd(adRequest)
-        }
+
         return view
     }
 
