@@ -57,4 +57,18 @@
 Premium düzeyde deneyim kazanın.
 Tüm hizmetlerin tadını çıkarın"</string>
     <string name="delete">Kaldırmak</string>
+    <string name="overtrash">Hafızam dolu.</string>
+    <string name="recommend_to_clean">Sistemi temizlemeniz önerilir</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">Uygulama silindi.</string>
+    <string name="tap_to_clean">Temizlenmesi önerilir</string>
+
+    <string name="low_battery">Düşük şarj seviyesi.</string>
+    <string name="tap_to_optimize_battery">Cihazın ömrüne devam etmek için tıklayın</string>
+    <string name="boost_notification">Hızlandırmak</string>
+    <string name="energy_saving_notify">pil</string>
+
+    <string name="cpu">CPU</string>
+    <string name="others">daha</string>
 </resources>

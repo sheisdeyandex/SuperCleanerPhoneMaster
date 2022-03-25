@@ -57,4 +57,18 @@
  l'expérience à un prix élevé.
  Profitez de tous les services"</string>
     <string name="delete">Supprimer</string>
+    <string name="overtrash">La mémoire est débordante.</string>
+    <string name="recommend_to_clean">Il est conseillé de nettoyer le système</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">L\'application a été supprimée.  </string>
+    <string name="tap_to_clean">Il est conseillé de nettoyer</string>
+
+    <string name="low_battery">Niveau de charge faible. </string>
+    <string name="tap_to_optimize_battery">Appuyez sur pour continuer la vie de l\'appareil</string>
+    <string name="boost_notification">Accélérer</string>
+    <string name="energy_saving_notify">Batterie</string>
+
+    <string name="cpu">CPU</string>
+    <string name="others">De plus</string>
 </resources>

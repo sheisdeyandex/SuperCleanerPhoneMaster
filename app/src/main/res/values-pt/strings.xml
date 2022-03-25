@@ -57,4 +57,18 @@
  experiência a um prêmio.
  Desfrute de todos os serviços"</string>
     <string name="delete">Excluir</string>
+    <string name="overtrash">La memoria trabocca.</string>
+    <string name="recommend_to_clean">Si consiglia di pulire il sistema</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">L\'app è stata cancellata.</string>
+    <string name="tap_to_clean">Si consiglia di pulire</string>
+
+    <string name="low_battery">Livello di carica basso.</string>
+    <string name="tap_to_optimize_battery">Premere per continuare la vita del dispositivo</string>
+    <string name="boost_notification">Aumentar</string>
+    <string name="energy_saving_notify">Bateria</string>
+
+    <string name="cpu">CPU</string>
+    <string name="others">Mais</string>
 </resources>

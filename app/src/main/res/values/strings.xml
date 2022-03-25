@@ -46,8 +46,8 @@
     <string name="privacy" translatable="false">Privacy Policy</string>
     <string name="clean_top">Junk Cleaner</string>
     <string name="banner_size" translatable="false">SMART_BANNER</string>
-    <string name="banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="inter_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="banner_id" translatable="false">ca-app-pub-1102972648948693/4451129759</string>
+    <string name="inter_id" translatable="false">ca-app-pub-1102972648948693/8799785910</string>
     <string name="accept" translatable="false">принять</string>
     <string name="cancel" translatable="false">отклонить</string>
     <string name="decrease_cpu">Decreasing Brightness Upto 90%</string>
@@ -84,7 +84,7 @@
 
 
     <string name="language" translatable="false"></string>
-    <string name="boost_notification">Ускорить</string>
+
     <string name="instruments">Tools</string>
     <string name="app_manager">App Manager</string>
     <string name="tips">Tips</string>
@@ -93,7 +93,18 @@
  experience at a premium.
  Enjoy all the services."</string>
     <string name="delete">Uninstall</string>
-    <string name="energy_saving_notify">Батарея</string>
+
+    <string name="overtrash">The memory is overflowing.</string>
+    <string name="recommend_to_clean">It is recommended to clean the system</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">Deleted application.</string>
+    <string name="tap_to_clean">It is recommended to clean</string>
+    <string name="low_battery">Low charge level. </string>
+    <string name="tap_to_optimize_battery">Press to continue the life of the device</string>
+    <string name="boost_notification">Boost</string>
+    <string name="energy_saving_notify">Battery</string>
+
     <string name="cpu">CPU</string>
-    <string name="others">Еще</string>
+    <string name="others">More</string>
 </resources>

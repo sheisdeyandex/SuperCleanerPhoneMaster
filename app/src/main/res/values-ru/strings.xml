@@ -54,11 +54,24 @@
     <string name="reduce_app_light_80">Уменьшение яркости до 80%</string>
     <string name="close_all">Отключение системных сервисов, таких как Bluetooth, Ориентация, Синхронизация и т.д.</string>
 
-    <string name="boost_notification">Ускорить</string>
     <string name="instruments">Инструменты</string>
     <string name="app_manager">Менеджер приложений</string>
     <string name="tips">Советы</string>
     <string name="premium">Активировать Smart Cleaner Premium</string>
     <string name="premium_full_text">Никакой рекламы, чтобы сделать ваш опыт работы на премиальном уровне. Наслаждайтесь всеми услугами</string>
-    <string name="delete">Удалить</string>
+    <string name="delete">Удалить</string>]
+    <string name="overtrash">Память переполнена</string>
+    <string name="recommend_to_clean">Рекомендуется произвести очистку системы</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">Удалено приложение</string>
+    <string name="tap_to_clean">Нажмите для очистки памяти</string>
+
+    <string name="low_battery">Низкий уровень заряда</string>
+    <string name="tap_to_optimize_battery">Нажмите для продолжения жизни устройства</string>
+    <string name="boost_notification">Ускорить</string>
+    <string name="energy_saving_notify">Батарея</string>
+
+    <string name="cpu">CPU</string>
+    <string name="others">Еще</string>
 </resources>

@@ -54,4 +54,18 @@
  la experiencia en un premio.
  Disfruta de todos los servicios"</string>
     <string name="delete">Borrar</string>
+    <string name="overtrash">La memoria se desborda.</string>
+    <string name="recommend_to_clean">Es aconsejable limpiar el sistema</string>
+    <string name="optimize_app">Оптимизируйте устройство</string>
+    <string name="app_installed">Установлено приложение</string>
+    <string name="app_deleted">La aplicación ha sido eliminada. </string>
+    <string name="tap_to_clean">Es aconsejable limpiar</string>
+
+    <string name="low_battery">Nivel de carga bajo. </string>
+    <string name="tap_to_optimize_battery">Pulse para continuar la vida del dispositivo</string>
+    <string name="boost_notification">Acelerar</string>
+    <string name="energy_saving_notify">Batería</string>
+
+    <string name="cpu">CPU</string>
+    <string name="others">mas</string>
 </resources>

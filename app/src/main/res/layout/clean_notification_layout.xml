@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EE4848"
+    android:orientation="horizontal"
+    android:layout_height="48dp">
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:src="@drawable/ic_clean_ram"
+    android:layout_gravity="center"
+android:layout_weight="0.5"
+    />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/overtrash"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+android:includeFontPadding="false"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recommend_to_clean"
+            android:textSize="10sp"
+android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:alpha="0.6"
+            />
+
+    </LinearLayout>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.9"
+app:backgroundTint="@color/white"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/btn_clean"
+        android:text="@string/clean"
+        android:textColor="#FA2637"
+        android:textSize="10sp"
+        app:cornerRadius="20dp"
+        android:textAllCaps="false"
+        />
+</LinearLayout>

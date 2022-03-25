@@ -19,7 +19,6 @@ class WidgetBroadCastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, p1: Intent?) {
         val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationLayout = RemoteViews("com.supers.cleaner.phonemaster", R.layout.custom_notification_layout)
-        val notificationLayoutExpanded = RemoteViews("com.supers.cleaner.phonemaster", R.layout.custom_expandable_layout)
     val notificationIntent = Intent(context,MainActivity::class.java)
         notificationIntent.putExtra("whattodo","optimize")
 
@@ -49,7 +48,7 @@ class WidgetBroadCastReceiver : BroadcastReceiver() {
     notificationLayout.setOnClickPendingIntent(R.id.iv_clean, pendingIntentClean)
     notificationLayout.setOnClickPendingIntent(R.id.iv_others, pendingIntentOthers)
         val customNotification = NotificationCompat.Builder(context, AlarmReceiver.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.logo)
             .setCustomContentView(notificationLayout)
             .setOngoing(true)
             .build()
@@ -61,6 +60,7 @@ class WidgetBroadCastReceiver : BroadcastReceiver() {
             )
             notificationManager.createNotificationChannel(channel)
         }
+        context.startService(Intent(context, BatteryService::class.java))
         notificationManager.notify(0, customNotification)
     }
 

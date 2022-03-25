@@ -30,6 +30,7 @@ class MyApplication : Application() {
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
         activateAppMetrica()
+
     }
     companion object {
         lateinit var sInstance: MyApplication
@@ -62,7 +63,6 @@ class MyApplication : Application() {
     private fun activateAppMetrica() {
         val appMetricaConfig: YandexMetricaConfig =
             YandexMetricaConfig.newConfigBuilder("f9587771-e2e6-4158-ba4b-9b252f17d5f5")
-                .handleFirstActivationAsUpdate(isFirstActivationAsUpdate())
                 .withLocationTracking(true)
                 .withStatisticsSending(true)
                 .build()

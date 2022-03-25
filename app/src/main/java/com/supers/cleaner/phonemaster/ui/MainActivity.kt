@@ -1,7 +1,9 @@
 package com.supers.cleaner.phonemaster.ui
 import android.app.Activity
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -9,7 +11,6 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,13 +26,14 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.supers.cleaner.phonemaster.AlarmReceiver
 import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.R
-import com.supers.cleaner.phonemaster.Utils.PreferencesProvider
+import com.supers.cleaner.phonemaster.Utils.AlarmUtils
 import com.supers.cleaner.phonemaster.databinding.ActivityMainBinding
 import com.supers.cleaner.phonemaster.interfaces.AskPermissions
 import com.supers.cleaner.phonemaster.interfaces.IFragment
+import com.supers.cleaner.phonemaster.services.BatterySaverReceiver
+import com.supers.cleaner.phonemaster.services.CleanBroadcastReceiver
 import com.supers.cleaner.phonemaster.services.WidgetBroadCastReceiver
 import java.util.*
 
@@ -58,10 +60,6 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
         else{
             MyApplication.bluetoothPermissionGranted = true
         }
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d("sukawtf", requestCode.toString())
     }
 
     private fun askForPermission(permission: String, requestCode: Int) {
@@ -118,24 +116,21 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
 //        notificationManager.notify(0, customNotification)
 //    }
     private fun setNotification() {
-        PreferencesProvider.getInstance().edit().putString("state_Head", resources.getString(R.string.notif_head))
-            .putString("state_Body", resources.getString(R.string.notif_body))
-            .apply()
 
         val calendar = Calendar.getInstance()
         val now = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 20)
-        calendar.set(Calendar.MINUTE,43)
+        calendar.set(Calendar.HOUR_OF_DAY, 5)
+        calendar.set(Calendar.MINUTE,12)
         calendar.set(Calendar.SECOND, 0)
 
         //if user sets the alarm after their preferred time has already passed that day
         if (now.after(calendar)) {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
-        val intent = Intent(this, AlarmReceiver::class.java)
+        val intent = Intent(this, CleanBroadcastReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this@MainActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = getSystemService(Activity.ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent)
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -143,7 +138,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
         grantResults: IntArray
     ) {
         when (requestCode) {
-            1 -> if (grantResults[0] === PackageManager.PERMISSION_GRANTED) {
+            1 -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //permission with request code 1 granted
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show()
             } else {
@@ -302,18 +297,24 @@ fun selectTab(tab: String) {
     }
     transaction.commitNow()
 }
+    lateinit var  mBatteryStatusReceiver:BatterySaverReceiver
     val BROADCAST = "com.supers.cleaner.phonemaster.android.action.broadcast"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val manager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+manager.cancel(2)
+manager.cancel(1)
+        AlarmUtils.setAlarm(this,
+            AlarmUtils.ACTION_CHECK_DEVICE_STATUS,
+            AlarmUtils.TIME_CHECK_DEVICE_STATUS)
         val adRequest = AdRequest.Builder().build()
         if(!MyApplication.premiumUser){
             binding.avBanner.loadAd(adRequest)
         }
-
-
         if (intent.hasExtra("whattodo")) {
             MyApplication.notificationClicked = true
             binding.clSplash.visibility= View.GONE

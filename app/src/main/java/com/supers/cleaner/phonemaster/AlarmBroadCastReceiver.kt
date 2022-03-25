@@ -23,7 +23,7 @@ class AlarmBroadCastReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context,"com.supers.cleaner.phonemaster.channelId")
                 .setContentTitle(context.resources.getString(R.string.title_notefication))
                 .setContentText(context.resources.getString(R.string.detail_notification))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo)
                 .setContentIntent(intentt).setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
 
