@@ -46,8 +46,8 @@
     <string name="privacy" translatable="false">Privacy Policy</string>
     <string name="clean_top">Junk Cleaner</string>
     <string name="banner_size" translatable="false">SMART_BANNER</string>
-    <string name="banner_id" translatable="false">ca-app-pub-1102972648948693/4451129759</string>
-    <string name="inter_id" translatable="false">ca-app-pub-1102972648948693/8799785910</string>
+    <string name="banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="inter_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="accept" translatable="false">принять</string>
     <string name="cancel" translatable="false">отклонить</string>
     <string name="decrease_cpu">Decreasing Brightness Upto 90%</string>
