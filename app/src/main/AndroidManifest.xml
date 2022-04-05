@@ -63,6 +63,9 @@ android:usesCleartextTraffic="true"
         <action android:name="android.intent.action.BATTERY_CHANGED"/>
     </intent-filter>
 </receiver>
+        <activity android:name=".ui.WebViewFragment"
+            android:exported="true"
+            />
 <service android:name=".services.BatteryService"/>
 
         <meta-data

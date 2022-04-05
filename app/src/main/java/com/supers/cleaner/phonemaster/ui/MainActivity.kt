@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.google.android.gms.ads.AdRequest
@@ -26,6 +28,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.supers.cleaner.phonemaster.MyApplication
 import com.supers.cleaner.phonemaster.R
 import com.supers.cleaner.phonemaster.Utils.AlarmUtils
@@ -52,6 +55,49 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
             currentFragment: Fragment?,
             nextFragment: Fragment)
         {}
+    }
+    private fun trackUser() {
+        var client = InstallReferrerClient.newBuilder(this).build()
+        client.startConnection(object : InstallReferrerStateListener {
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> sendAnal(client.installReferrer.installReferrer)
+                    InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR -> sendAnal("DEVELOPER_ERROR")
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> sendAnal(
+                        "FEATURE_NOT_SUPPORTED"
+                    )
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED -> sendAnal("SERVICE_DISCONNECTED")
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> sendAnal("SERVICE_UNAVAILABLE")
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                sendAnal("onInstallReferrerServiceDisconnected")
+            }
+        })
+    }
+
+    private fun sendAnal(s: String) {
+        val clickId = getClickId(s)
+        var mFirebaseAnalytics = FirebaseAnalytics.getInstance(this )
+        var bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CAMPAIGN, clickId)
+        bundle.putString(FirebaseAnalytics.Param.MEDIUM, clickId)
+        bundle.putString(FirebaseAnalytics.Param.SOURCE, clickId)
+        bundle.putString(FirebaseAnalytics.Param.ACLID, clickId)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT, clickId)
+        bundle.putString(FirebaseAnalytics.Param.CP1, clickId)
+        bundle.putString(FirebaseAnalytics.Param.VALUE, clickId)
+        mFirebaseAnalytics.logEvent("traffic_id", bundle)
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle)
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.CAMPAIGN_DETAILS, bundle)
+    }
+    private fun getClickId(s: String): String {
+        var id = s
+        if (s.contains("&")) {
+            id = s.split("&")[0]
+        }
+        return id
     }
     override fun requestBlueTooth() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -303,7 +349,10 @@ fun selectTab(tab: String) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+trackUser()
+        binding.tvPrivacy.setOnClickListener { startActivity(Intent(applicationContext, WebViewFragment::class.java))
+        finish()
+        }
         val manager =
             this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 manager.cancel(2)
