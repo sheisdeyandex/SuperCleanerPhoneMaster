@@ -88,7 +88,7 @@
     <string name="instruments">Tools</string>
     <string name="app_manager">App Manager</string>
     <string name="tips">Tips</string>
-    <string name="premium">Activate Smart Cleaner Premiumm</string>
+    <string name="premium">Activate Smart Cleaner Premium</string>
     <string name="premium_full_text">"No advertising to make your
  experience at a premium.
  Enjoy all the services."</string>
@@ -107,4 +107,13 @@
 
     <string name="cpu">CPU</string>
     <string name="others">More</string>
+    <string name="deleteAds">Remove ads</string>
+    <string name="month">1 month</string>
+    <string name="justMonth">month</string>
+    <string name="justYear">year</string>
+    <string name="monthText">Free for 7 days, then</string>
+    <string name="monthTextSecond"> after free trial</string>
+    <string name="year">1 year</string>
+    <string name="try_free">TRY IT FOR FREE FOR 7 DAYS</string>
+    <string name="premium_bottom_text">"Recurring Billing. Cancellation at any time. Payment will be deducted from your Google Pay account when you confirm your purchase. Subscription automatically renews unless auto-renewal is disabled at least 24 hours before the end of the current period. Subscription renewal fee will be deducted from the account within 24 hours before the end of the current period with the renewal cost. Subscriptions can be managed by the user, and auto-renewal can be disabled by going to the user account settings after purchase. Any unused portion of the free trial period, if offered, will be canceled when the user purchases a subscription for that publication, if applicable."</string>
 </resources>

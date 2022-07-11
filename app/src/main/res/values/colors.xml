@@ -16,6 +16,11 @@
     <color name="ram_color">#EE4856</color>
     <color name="ypviewfrontcolor">#EE4856</color>
     <color name="ypviewbehindcolor">#77EE4856</color>
+    <color name="background">#27282D</color>
+    <color name="cardStrokeColor">#4D4D4D</color>
+    <color name="cardSelectedStrokeColor">#E97244</color>
+    <color name="fortyPercentWhite">#66FFFFFF</color>
+    <color name="sixtysixPercentWhite">#A8FFFFFF</color>
 
     <color name="main_blue_icons_color">#45B7F7</color>
 </resources>

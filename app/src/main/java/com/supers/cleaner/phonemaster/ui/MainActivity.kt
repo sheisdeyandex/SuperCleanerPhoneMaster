@@ -11,6 +11,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.NavController
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.BillingProcessor.ISkuDetailsResponseListener
+import com.anjlab.android.iab.v3.PurchaseInfo
+import com.anjlab.android.iab.v3.SkuDetails
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.google.android.gms.ads.AdRequest
@@ -38,6 +42,7 @@ import com.supers.cleaner.phonemaster.interfaces.IFragment
 import com.supers.cleaner.phonemaster.services.BatterySaverReceiver
 import com.supers.cleaner.phonemaster.services.CleanBroadcastReceiver
 import com.supers.cleaner.phonemaster.services.WidgetBroadCastReceiver
+import com.supers.cleaner.phonemaster.ui.premium.FragmentPremium
 import java.util.*
 
 
@@ -47,7 +52,11 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
     var mInterstitialAd: InterstitialAd? = null
     lateinit var adRequest: AdRequest
     lateinit var finalExtremeModeUsageTime:String
-    private lateinit var navController: NavController
+    lateinit var bp: BillingProcessor
+    var price = ""
+    var yearPrice = ""
+    var priceFloat = 0.0
+    var currency = ""
     private val navigator =object: AppNavigator(this, R.id.cl_main){
         override fun setupFragmentTransaction(
             screen: FragmentScreen,
@@ -55,6 +64,55 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
             currentFragment: Fragment?,
             nextFragment: Fragment)
         {}
+    }
+    fun subscribeMonthly(){
+        bp.subscribe(this, "month")
+    }
+    fun subscribeYearly(){
+        bp.subscribe(this,"year")
+    }
+    private fun initBilling(){
+        bp = BillingProcessor(applicationContext, "", object :BillingProcessor.IBillingHandler{
+            override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
+                recreate()
+            }
+
+            override fun onPurchaseHistoryRestored() {
+            }
+
+            override fun onBillingError(errorCode: Int, error: Throwable?) {
+
+            }
+
+            override fun onBillingInitialized() {
+                if (bp.isSubscribed("month")||bp.isSubscribed("year")){
+                    MyApplication.premiumUser = true
+                }
+                bp.getSubscriptionListingDetailsAsync("month",object :ISkuDetailsResponseListener{
+                    override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
+                        products?.map {
+                            price = it.priceText
+                            priceFloat = it.priceValue
+                            currency = price.substring(price.length-1)
+                        }
+                    }
+
+                    override fun onSkuDetailsError(error: String?) {
+                    }
+                })
+                bp.getSubscriptionListingDetailsAsync("year",object :ISkuDetailsResponseListener{
+                    override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
+                        products?.map {
+                            yearPrice = it.priceText
+                        }
+                    }
+
+                    override fun onSkuDetailsError(error: String?) {
+                    }
+                })
+            }
+        })
+        bp.initialize()
     }
     private fun trackUser() {
         var client = InstallReferrerClient.newBuilder(this).build()
@@ -209,6 +267,7 @@ class MainActivity : AppCompatActivity(), IFragment, AskPermissions{
         fun fragmentUltraPowerSaving() = FragmentScreen { FragmentUltraPowerSaving() }
         fun fragmentUltraPowerSavingAnim() = FragmentScreen { FragmentUltraPowerSavingAnim() }
         fun fragmentAppsManager() = FragmentScreen { FragmentApps() }
+        fun fragmentPremium() = FragmentScreen { FragmentPremium() }
     }
     override fun onResume() {
         super.onResume()
@@ -334,6 +393,13 @@ fun selectTab(tab: String) {
                 , tab
             )
         }
+        else if(tab=="premium"){
+            transaction.add(
+                R.id.cl_main,
+                Screens.fragmentPremium().createFragment(fm.fragmentFactory)
+                , tab
+            )
+        }
     }
     if (currentFragment != null) {
         transaction.hide(currentFragment)
@@ -349,14 +415,15 @@ fun selectTab(tab: String) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-trackUser()
+        trackUser()
+        initBilling()
         binding.tvPrivacy.setOnClickListener { startActivity(Intent(applicationContext, WebViewFragment::class.java))
         finish()
         }
         val manager =
             this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-manager.cancel(2)
-manager.cancel(1)
+        manager.cancel(2)
+        manager.cancel(1)
         AlarmUtils.setAlarm(this,
             AlarmUtils.ACTION_CHECK_DEVICE_STATUS,
             AlarmUtils.TIME_CHECK_DEVICE_STATUS)

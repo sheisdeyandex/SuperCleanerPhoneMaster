@@ -68,4 +68,14 @@
 
     <string name="cpu">CPU</string>
     <string name="others">mas</string>
+
+    <string name="deleteAds">Quitar la publicidad</string>
+    <string name="month">1 mes</string>
+    <string name="justMonth">mes</string>
+    <string name="justYear">año</string>
+    <string name="monthText">Gractis durante 7 días, luego</string>
+    <string name="monthTextSecond"> después de la versión de prueba gratis</string>
+    <string name="year">1 año</string>
+    <string name="try_free">PRUEBE 7 DÍAS GRATIS</string>
+    <string name="premium_bottom_text">"Facturación repetitiva. Cancelación en cualquier momento. El pago se abonará de la cuenta Google Pay al confirmar la compra. La suscripción se renueva de forma automática, si la renovación automática no está desactivada como mínimo 24 horas antes de expirar el periodo actual. El pago por la renovación de la suscripción se abonará de la cuenta durante 24 antes de expirar el periodo actual indicando el precio de renovación. El usuario puede administrar las suscripciones, y la renovación automática puede ser desactivada al ir a la configuración de la cuenta del usuario después de la compra. Cualquier parte no usada del periodo de prueba gratis, si el mismo se ofrece, será anulada, cuando el usuario adquiera la suscripción a esta publicación, si aplicable. "</string>
 </resources>

@@ -68,4 +68,14 @@
 
     <string name="cpu">CPU</string>
     <string name="others">Mehr</string>
+
+    <string name="deleteAds">Anzeigen entfernen</string>
+    <string name="month">1 Monat</string>
+    <string name="justMonth">Monat</string>
+    <string name="justYear">Jahr</string>
+    <string name="monthText">Kostenlos für 7 Tage, dann</string>
+    <string name="monthTextSecond"> nach kostenloser Testphase</string>
+    <string name="year">1 Jahr</string>
+    <string name="try_free">7 TAGE LANG KOSTENLOS TESTEN</string>
+    <string name="premium_bottom_text">"Wiederkehrende Abrechnung. Stornierung jederzeit möglich. Die Zahlung wird von Ihrem Google Pay-Konto abgezogen, wenn Sie Ihren Kauf bestätigen. Das Abonnement verlängert sich automatisch, es sei denn, die automatische Verlängerung wird mindestens 24 Stunden vor Ablauf des aktuellen Zeitraums deaktiviert. Die Gebühr für die Verlängerung des Abonnements wird innerhalb von 24 Stunden vor dem Ende des aktuellen Zeitraums zusammen mit den Verlängerungskosten vom Konto abgezogen. Die Abonnements können vom Benutzer verwaltet werden, und die automatische Verlängerung kann nach dem Kauf in den Einstellungen des Benutzerkontos deaktiviert werden. Ein ungenutzter Teil des kostenlosen Testzeitraums, falls angeboten, wird storniert, wenn der Nutzer ein Abonnement für diese Publikation erwirbt, falls zutreffend."</string>
 </resources>

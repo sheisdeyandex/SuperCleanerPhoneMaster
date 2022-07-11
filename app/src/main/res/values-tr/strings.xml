@@ -71,4 +71,14 @@ Tüm hizmetlerin tadını çıkarın"</string>
 
     <string name="cpu">CPU</string>
     <string name="others">daha</string>
+
+    <string name="deleteAds">Reklamları kaldırın</string>
+    <string name="month">1 ay</string>
+    <string name="justMonth">ay</string>
+    <string name="justYear">yıl</string>
+    <string name="monthText">7 gün boyunca ücretsiz, sonra</string>
+    <string name="monthTextSecond"> ücretsiz denemeden sonra</string>
+    <string name="year">1 yıl</string>
+    <string name="try_free">7 GÜN BOYUNCA ÜCRETSIZ DENEYIN</string>
+    <string name="premium_bottom_text">"Yinelenen Faturalandırma. İstediğiniz zaman iptal edebilirsiniz. Ödeme, satın alma işleminizi onayladığınızda Google Pay hesabınızdan düşülecektir. Otomatik yenileme, mevcut dönemin bitiminden en az 24 saat önce devre dışı bırakılmadığı sürece abonelik otomatik olarak yenilenir. Abonelik yenileme ücreti, mevcut dönemin bitiminden önceki 24 saat içinde yenileme maliyetiyle birlikte hesaptan düşülecektir. Abonelikler kullanıcı tarafından yönetilebilir ve satın alma işleminden sonra kullanıcı hesabı ayarlarına gidilerek otomatik yenileme devre dışı bırakılabilir. Ücretsiz deneme süresinin kullanılmayan kısmı, eğer teklif edilmişse, kullanıcı o yayın için bir abonelik satın aldığında iptal edilecektir."</string>
 </resources>

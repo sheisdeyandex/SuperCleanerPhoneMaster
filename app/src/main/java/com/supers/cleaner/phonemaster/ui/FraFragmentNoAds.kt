@@ -23,6 +23,9 @@ binding.clApps.setOnClickListener {
     (requireActivity() as MainActivity).selectTab("appsmanager")
     (requireActivity() as MainActivity).binding.bnvNav.visibility = View.GONE
 }
+        binding.mcvPremium.setOnClickListener {
+            (requireActivity() as MainActivity).selectTab("premium")
+        }
         return view
     }
 

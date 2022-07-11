@@ -71,4 +71,13 @@
 
     <string name="cpu">CPU</string>
     <string name="others">Mais</string>
+    <string name="deleteAds">Remover anúncios</string>
+    <string name="month">1 mês</string>
+    <string name="justMonth">mês</string>
+    <string name="justYear">ano</string>
+    <string name="monthText">Gratuito durante 7 dias, após disso</string>
+    <string name="monthTextSecond"> após o teste gratuito</string>
+    <string name="year">1 ano</string>
+    <string name="try_free">EXPERIMENTE GRATUITAMENTE DURANTE 7 DIAS</string>
+    <string name="premium_bottom_text">"Facturação recorrente. A subscrição pode ser cancelada em qualquer altura. O pagamento será deduzido da sua conta Google Pay quando confirmar a compra. A subscrição renova-se automaticamente, a menos que a renovação automática seja desactivada pelo menos 24 horas antes do fim do período actual. A taxa de renovação da assinatura será deduzida da conta no prazo de 24 horas antes do final do período actual com a taxa de renovação. As subscrições podem ser geridas pelo utilizador e a renovação automática pode ser desactivada indo para as definições da conta de utilizador após a compra. Qualquer parte não utilizada do período experimental gratuito, se oferecida, será cancelada quando o utilizador comprar uma assinatura para essa publicação, se aplicável. "</string>
 </resources>

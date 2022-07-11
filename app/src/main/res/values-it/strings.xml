@@ -73,4 +73,14 @@
 
     <string name="cpu">CPU</string>
     <string name="others">Più</string>
+
+    <string name="deleteAds" >Rimuovere gli annunci</string>.
+    <stringa name="month">1 mese</stringa>
+    <string name="justMonth" >mese</string>
+    <string name="justYear">anno</string>
+    <string name="monthText" >Gratuito per 7 giorni, poi</string>
+    <string name="monthTextSecond">Per la prova gratuita</string>.
+    <string name="year">1 anno</string>.
+    <string name="try_free">Prova 7 giorni GRATIS</string>.
+    <string name="premium_bottom_text">"Fatturazione ripetuta. Disdetta immediata. Il pagamento verrà detratto dal vostro conto Google Pay al momento della conferma dell'acquisto. L'abbonamento si rinnova automaticamente, a meno che il rinnovo automatico non venga disattivato almeno 24 ore prima della fine del periodo in corso. Il costo del rinnovo dell'abbonamento sarà detratto dal conto entro 24 ore prima della fine del periodo in corso con il costo del rinnovo. Gli abbonamenti possono essere gestiti dall'utente e il rinnovo automatico può essere disattivato accedendo alle impostazioni dell'account utente dopo l'acquisto. Qualsiasi parte inutilizzata del periodo di prova gratuito, se offerto, sarà annullata quando l'utente acquisterà un abbonamento per tale pubblicazione, se applicabile. "</string>.
 </resources>

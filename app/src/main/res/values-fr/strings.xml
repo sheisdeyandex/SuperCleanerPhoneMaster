@@ -71,4 +71,15 @@
 
     <string name="cpu">CPU</string>
     <string name="others">De plus</string>
+
+    <string name="deleteAds">Supprimer les annonces</string>
+    <string name="month">1 mois</string>
+    <string name="justMonth">mois</string>
+    <string name="justYear">an</string>
+    <string name="monthText">Gratuit pendant 7 jours, puis</string>
+    <string name="monthTextSecond"> après l\'essai gratuit</string>
+    <string name="year">1 an</string>
+    <string name="try_free">ESSAYEZ-LE GRATUITEMENT PENDANT 7 JOURS</string>
+    <string name="premium_bottom_text">"Facturation récurrente. Annulation à tout moment. Le paiement sera déduit de votre compte Google Pay lorsque vous confirmerez votre achat. L'abonnement est automatiquement renouvelé, sauf si le renouvellement automatique est désactivé au moins 24 heures avant la fin de la période en cours. Les frais de renouvellement de l'abonnement seront déduits du compte dans les 24 heures avant la fin de la période en cours avec le coût du renouvellement. Les abonnements peuvent être gérés par l'utilisateur, et le renouvellement automatique peut être désactivé en allant dans les paramètres du compte utilisateur après l'achat. Toute partie non utilisée de la période d'essai gratuite, si elle est offerte, sera annulée lorsque l'utilisateur achètera un abonnement pour cette publication, le cas échéant."</string>
+
 </resources>
